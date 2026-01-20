@@ -1,0 +1,78 @@
+<div th:fragment="modalNuevoEmpleado">
+  <div class="modal fade" id="modalNuevoEmpleado" tabindex="-1" aria-labelledby="modalNuevoEmpleadoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form th:action="@{empleados/guardar}" method="post">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalNuevoEmpleadoLabel">Nuevo Empleado</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="nuevoDni" class="form-label">DNI</label>
+              <div class="input-group">
+                <input type="text" class="form-control" name="dni" id="nuevoDni" required pattern="[0-9]{8}" title="El DNI debe contener 8 dígitos numéricos.">
+                <button type="button" class="btn btn-primary" id="buscarDniBtn" tabindex="-1">Buscar RENIEC</button>
+              </div>
+              <span id="dniError" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+              <label for="nuevoNombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" name="nombre" id="nuevoNombre" required pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo se permiten letras.">
+            </div>
+            <div class="mb-3">
+              <label for="nuevoApellidos" class="form-label">Apellidos</label>
+              <input type="text" class="form-control" name="apellidos" id="nuevoApellidos" required pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo se permiten letras.">
+            </div>
+            <div class="mb-3">
+              <label for="nuevoFechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+              <input type="date" class="form-control" name="fecha_nacimiento" id="nuevoFechaNacimiento" required>
+              <span id="fechaNacimientoError" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+              <label for="nuevoGenero" class="form-label">Género</label>
+              <select class="form-select" name="genero" id="nuevoGenero" required>
+                <option value="">Seleccione...</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+                <option value="Otro">Otro</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="nuevoTelefono" class="form-label">Teléfono</label>
+              <input type="tel" class="form-control" name="telefono" id="nuevoTelefono" pattern="[0-9]{9}" title="El teléfono debe contener 9 dígitos numéricos.">
+            </div>
+            <div class="mb-3">
+              <label for="nuevoEstadoCivil" class="form-label">Estado Civil</label>
+              <select class="form-select" name="estado_civil" id="nuevoEstadoCivil">
+                <option value="">Seleccione...</option>
+                <option value="Soltero">Soltero/a</option>       <option value="Casado">Casado/a</option>         <option value="divorciado">Divorciado/a</option> <option value="Viudo">Viudo/a</option>           </select>
+            </div>
+            <div class="mb-3">
+              <label for="nuevoDireccion" class="form-label">Dirección</label>
+              <input type="text" class="form-control" name="direccion" id="nuevoDireccion">
+            </div>
+            <div class="mb-3">
+              <label for="nuevoProfesion" class="form-label">Profesión</label>
+              <select class="form-select" name="id_profesion" id="nuevoProfesion" required>
+                <option value="">Seleccione...</option>
+                <option th:each="prof : ${profesiones}" th:value="${prof.id_profesion}" th:text="${prof.nombre}"></option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="nuevoRama" class="form-label">Rama</label>
+              <select class="form-select" name="id_rama" id="nuevoRama" required>
+                <option value="">Seleccione...</option>
+                <option th:each="ram : ${ramas}" th:value="${ram.id_rama}" th:text="${ram.nombre}"></option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+
+        :root{
+            --azul-csi:#007acc;
+            --azul-oscuro:#015BAC;
+            --gris-texto:#6c757d;
+            --icono:#343a40;
+        }
+
+        *{box-sizing:border-box; margin:0; padding:0;}
+        body{background:#f9f9f9;font-family:'Inter',sans-serif;font-weight:400;}
+        .login-wrapper{min-height:100vh;}
+
+        /* LADO IZQUIERDO */
+        .login-left{
+            background:linear-gradient(135deg,var(--azul-csi),var(--azul-oscuro));
+            display:flex;flex-direction:column;justify-content:center;align-items:center;
+            min-height:100vh;color:#fff;text-align:center;padding:2rem;
+        }
+        .login-left img{width:60%;max-width:260px;min-width:120px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.35));}
+        .login-left p{font-size:1.35rem;margin-top:1.5rem;max-width:90%;font-family:'Poppins',sans-serif;font-weight:600;text-shadow:0 2px 4px rgba(0,0,0,.25);}
+
+        /* LADO DERECHO */
+        .login-right{display:flex;align-items:center;justify-content:center;background:#fff;padding:clamp(2rem,4vw,4rem);}
+        .form-box{width:100%;max-width:480px;}
+        .form-box h3{font-family:'Poppins',sans-serif;font-weight:600;color:var(--azul-csi);}
+
+        /* ICONOS DENTRO DEL INPUT */
+        .field-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--icono);font-size:.9rem;pointer-events:none;}
+        .with-icon{padding-left:2.75rem;}
+
+        /* BOTÓN */
+        .btn-primary{background:var(--azul-csi);border:none;font-weight:500;transition:background .25s;}
+        .btn-primary:hover{background:var(--azul-oscuro);}
+
+        /* RESPONSIVO */
+        @media(max-width:767.98px){.login-left{min-height:220px;}.login-left img{width:40%;}}
+
+.alert {
+  animation: fadeSlide 0.4s ease-out;
+}
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

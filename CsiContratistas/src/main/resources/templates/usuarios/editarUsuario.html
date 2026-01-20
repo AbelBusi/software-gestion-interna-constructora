@@ -1,0 +1,58 @@
+<div class="modal fade" id="modalEditarUsuario" tabindex="-1" aria-hidden="true" th:fragment="editarUsuario">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form id="formEditarUsuario" method="post">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fas fa-user-edit me-2"></i>Editar Usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="editarIdUsuario" name="id_usuario">
+          <div class="mb-3">
+            <label for="editarIdEmpleado" class="form-label">Empleado</label>
+            <select class="form-control select2-empleados" id="editarIdEmpleado" name="id_empleado" required>
+              <option value="">Seleccione un empleado</option>
+              <option th:each="empleado : ${empleados}" th:value="${empleado.id_empleado}"
+                      th:text="${empleado.nombre + ' ' + empleado.apellidos + ' - DNI: ' + empleado.dni}">
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="correo">Correo Electrónico</label>
+            <input type="email" 
+                   class="form-control" 
+                   th:value="${usuario != null ? usuario.correo : ''}" 
+                   readonly 
+                   style="background-color: #f8f9fa; cursor: not-allowed;"
+                   title="El correo no se puede modificar" />
+            
+            <input type="hidden" th:value="${usuario != null ? usuario.correo : ''}" name="correo" />
+          </div>
+          <div class="mb-3">
+            <label for="editarIdRol" class="form-label">Rol</label>
+            <select class="form-control" id="editarIdRol" name="id_rol" required>
+              <option value="">Seleccione un rol</option>
+              <option th:each="rol : ${roles}" th:value="${rol.id_rol}"
+                      th:text="${rol.nombre}"></option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="editarEstado" class="form-label">Estado</label>
+            <select class="form-control" id="editarEstado" name="estado" required>
+              <option value="true">Activo</option>
+              <option value="false">Inactivo</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <i class="fas fa-times me-1"></i> Cancelar
+          </button>
+          <button type="submit" class="btn btn-success">
+            <i class="fas fa-check me-1"></i> Guardar Cambios
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

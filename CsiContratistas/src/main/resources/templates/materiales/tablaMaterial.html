@@ -1,0 +1,96 @@
+<div class="card shadow-sm mt-4" th:fragment="tarjetaMateriales">
+    <div class="card-body">
+
+        <div class="d-flex flex-wrap align-items-center mb-3 pb-2 border-bottom gap-2">
+            <h2 class="mb-0 fw-semibold text-dark flex-grow-1">Lista de Materiales</h2>
+            <button class="btn btn-primary d-flex align-items-center gap-1" data-bs-toggle="modal"
+                data-bs-target="#modalNuevoMaterial">
+                <i class="fas fa-plus"></i><span>Nuevo Material</span>
+            </button>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col mb-2 mb-md-0">
+                <input type="text" class="form-control" id="filtroNombre" placeholder="Buscar por nombre...">
+            </div>
+            <div class="col mb-2 mb-md-0">
+                <select class="form-select" id="filtroTipoMaterial">
+                    <option value="">Todos los tipos</option>
+                    <option th:each="tipo : ${tiposMaterialObj}" th:value="${tipo.nombre}" th:text="${tipo.nombre}">
+                    </option>
+                </select>
+            </div>
+            <div class="col-auto mb-2 mb-md-0">
+                <button class="btn btn-primary w-100" type="button"
+                    onclick="document.getElementById('filtroNombre').value='';document.getElementById('filtroTipoMaterial').selectedIndex=0;document.getElementById('filtroNombre').dispatchEvent(new Event('input'));">Limpiar</button>
+            </div>
+        </div>
+
+
+        <!-- Tabla -->
+        <div class="table-responsive">
+            <table id="tablaMateriales" class="table table-hover table-striped table-sm align-middle">
+                <thead class="encabezado-azul">
+                    <tr>
+                        <th>ID </th>
+                        <th>Tipo Material</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Stock Actual</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="material : ${materialesPage.content}">
+                        <td th:text="${material.id_material}"></td>
+                        <td th:text="${material.tipo_material.nombre}"></td>
+                        <td th:text="${material.nombre}"></td>
+                        <td th:text="${material.descripcion}"></td>
+                        <td th:text="${material.precio_unitario}"></td>
+                        <td th:text="${material.stock_actual}"></td>
+                        <!-- Acciones -->
+                        <td>
+                            <div class="d-flex  gap-2">
+                                <button class="btn btn-sm btn-warning btn-accion-material btn-editar-material"
+                                    th:attr="data-id_material=${material.id_material},data-nombre=${material.nombre},data-descripcion=${material.descripcion},data-precio_unitario=${material.precio_unitario},data-stock_actual=${material.stock_actual},data-tipo_material=${material.tipo_material.idtipomaterial},data-masa_especifica=${material.masa_especifica},data-longitud=${material.longitud},data-temperatura_termodinamica=${material.temperatura_termodinamica},data-estado=${material.estado}">
+                                    <i class="fas fa-edit"></i> Editar
+                                </button>
+                                <button class="btn btn-sm btn-danger btn-accion-material btn-eliminar-material"
+                                    th:attr="data-id_material=${material.id_material}">
+                                    <i class="fas fa-trash-alt"></i> Eliminar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${materialesPage.first} ? 'disabled'">
+                    <a class="page-link"
+                        th:href="@{|/administrador/materiales?page=${materialesPage.number - 1}|}">Anterior</a>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, materialesPage.totalPages - 1)}"
+                    th:classappend="${materialesPage.number == i} ? 'active'">
+                    <a class="page-link" th:href="@{|/administrador/materiales?page=${i}|}" th:text="${i + 1}">1</a>
+                </li>
+                <li class="page-item" th:classappend="${materialesPage.last} ? 'disabled'">
+                    <a class="page-link"
+                        th:href="@{|/administrador/materiales?page=${materialesPage.number + 1}|}">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <button id="downloadPdfBtn" class="btn btn-danger d-flex align-items-center gap-1">
+                <i class="fas fa-file-pdf"></i><span>Descargar PDF</span>
+            </button>
+            <button id="downloadXlsBtn" class="btn btn-success d-flex align-items-center gap-1">
+                <i class="fas fa-file-excel"></i><span>Descargar XLS</span>
+            </button>
+        </div>
+
+    </div>
+</div>

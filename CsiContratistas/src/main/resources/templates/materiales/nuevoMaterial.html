@@ -1,0 +1,61 @@
+<div th:fragment="modalNuevoMaterial">
+  <div class="modal fade" id="modalNuevoMaterial" tabindex="-1" aria-labelledby="modalNuevoMaterialLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form th:action="@{/administrador/materiales/guardar}" method="post">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalNuevoMaterialLabel">Nuevo Material</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="nuevoNombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" name="nombre" id="nuevoNombre" required>
+            </div>
+            <div class="mb-3">
+              <label for="nuevoTipoMaterial" class="form-label">Tipo Material</label>
+              <select class="form-select" name="tipo_material.idtipomaterial" id="nuevoTipoMaterial" required>
+                <option th:each="tipo : ${tiposMaterialObj}" th:value="${tipo.idtipomaterial}" th:text="${tipo.nombre}"></option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="nuevoPrecioUnitario" class="form-label">Precio Unitario</label>
+              <input type="number" step="0.01" class="form-control" name="precio_unitario" id="nuevoPrecioUnitario" required>
+            </div>
+            <div class="mb-3">
+              <label for="nuevoStockActual" class="form-label">Stock Actual</label>
+              <input type="number" class="form-control" name="stock_actual" id="nuevoStockActual" required>
+            </div>
+            <div class="mb-3">
+              <label for="nuevoMasaEspecifica" class="form-label">Masa Específica</label>
+              <input type="number" step="0.01" class="form-control" name="masa_especifica" id="nuevoMasaEspecifica">
+            </div>
+            <div class="mb-3">
+              <label for="nuevoLongitud" class="form-label">Longitud</label>
+              <input type="number" step="0.01" class="form-control" name="longitud" id="nuevoLongitud">
+            </div>
+            <div class="mb-3">
+              <label for="nuevoTemperaturaTermodinamica" class="form-label">Temperatura Termodinámica</label>
+              <input type="number" step="0.01" class="form-control" name="temperatura_termodinamica" id="nuevoTemperaturaTermodinamica">
+            </div>
+            <div class="mb-3">
+              <label for="nuevoDescripcion" class="form-label">Descripción</label>
+              <textarea class="form-control" name="descripcion" id="nuevoDescripcion"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="nuevoEstado" class="form-label">Estado</label>
+              <select class="form-select" name="estado" id="nuevoEstado">
+                <option value="true">Activo</option>
+                <option value="false">Inactivo</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,104 @@
+.btn-accion-material {
+    min-width: 90px;
+    text-align: center;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+.stat-card {
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.stat-icon {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(13, 110, 253, 0.1);
+    border-radius: 50%;
+}
+
+.stat-title {
+    font-size: 0.75rem;
+    color: #6c757d;
+    margin-bottom: 0.25rem;
+}
+
+.stat-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.progress-container {
+    width: 100%;
+    margin: 15px 0;
+}
+
+.progress-bar-excel {
+    height: 6px;
+    background-color: #e9ecef;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background-color: #28a745;
+    border-radius: 3px;
+    transition: width 0.4s ease;
+}
+
+.progress-text {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #6c757d;
+    text-align: center;
+}
+.encabezado-azul th{
+    background-color: #015bac !important;
+    color: white !important;
+ 
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+}
+
+
+.table {
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.table th, .table td {
+    border: none;
+}
+.table td, .table th {
+    padding-top: 0.4rem !important;
+    padding-bottom: 0.4rem !important;
+}
+.table-hover tbody tr:hover {
+    background-color: #e3f2fd;
+}
+.nav-pills {
+    box-shadow: 0 2px 8px rgba(1,91,172,0.08);
+    border-radius: 10px;
+    padding: 0.25rem 0.5rem;
+    background: #f8f9fa;
+}
+.nav-pills .nav-link.active {
+    background-color: #015bac;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 8px;
+}
+.nav-pills .nav-link {
+    transition: background 0.2s, color 0.2s;
+}

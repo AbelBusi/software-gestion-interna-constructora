@@ -1,0 +1,145 @@
+/* Fondo general y tipografía */
+body {
+    background-color: #f0f4f8;
+    font-family: 'Segoe UI', sans-serif;
+    color: #1f2d3d;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor principal */
+.main-content {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    animation: fadeIn 0.4s ease-in-out;
+    padding: 2rem;
+}
+
+/* Navegación tipo pills */
+.nav-pills .nav-link {
+    background-color: #d6eaff;
+    color: #007bff;
+    border-radius: 12px;
+    margin-right: 10px;
+    padding: 10px 18px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+.nav-pills .nav-link.active {
+    background-color: #007bff;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
+}
+
+/* Estilo de tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.15);
+}
+
+table thead {
+    background: linear-gradient(to right, #007bff, #3399ff) !important;
+    color: #ffffff !important;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+}
+
+table th,
+table td {
+    padding: 1rem;
+    text-align: left;
+}
+
+table th {
+    font-weight: 600;
+}
+
+table td {
+    background-color: #ffffff !important;
+    color: #212529 !important;
+    border-top: 1px solid #e3e6f0;
+    font-size: 0.95rem;
+    transition: background-color 0.3s ease;
+}
+
+table tbody tr:hover td {
+    background-color: #e6f2ff;
+    cursor: pointer;
+}
+
+/* Tarjetas */
+.card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+}
+.card-header {
+    background: linear-gradient(to right, #e0f0ff, #c4ddff);
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #0056b3;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    padding: 1rem;
+}
+
+/* Formularios */
+.form-control {
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    background-color: #f8fafd;
+    border: 1px solid #ced4da;
+    font-size: 0.95rem;
+}
+.form-floating > label {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+/* Botones */
+.btn {
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 10px 20px;
+    transition: transform 0.2s ease-in-out;
+}
+.btn i {
+    margin-right: 6px;
+}
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    color: #fff;
+}
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+    color: #fff;
+}
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+    color: #fff;
+}
+
+/* Animación fade in */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+

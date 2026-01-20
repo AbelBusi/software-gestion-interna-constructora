@@ -1,0 +1,268 @@
+/* =====================================================
+   PALETA Y TIPOGRAFÍA
+   (colores intactos, se añaden utilidades de foco)
+   ===================================================== */
+:root {
+  --azul-csi:      #007acc;
+  --azul-oscuro:   #015bac;
+  --azul-oscuro-2: #014a8a;          /* hover oscuro */
+  --gris-claro:    #f4f6fa;
+  --gris-borde:    #e2e6ee;
+  --sombra:        0 2px 6px rgba(0, 0, 0, .08);
+  --focus-ring:    0 0 0 3px rgba(0,122,204,.35);
+  --radio-base:    .75rem;
+  --transicion:    .25s ease;
+  --fuente-base:   "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body {
+  margin: 0;
+  background: #fff;
+  font-family: var(--fuente-base);
+  color: #333;
+}
+
+/* =====================================================
+   SIDEBAR
+   ===================================================== */
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;          /* top 0 | right auto | bottom 0 | left 0 */
+  width: 250px;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding-top: 2rem;
+  background: linear-gradient(180deg, var(--azul-oscuro) 0%, var(--azul-oscuro-2) 100%);
+  box-shadow: var(--sombra);
+  transition: width var(--transicion), transform var(--transicion);
+  z-index: 1040;
+}
+
+/* --- Modo colapsado opcional ----------------------------------------- */
+
+.sidebar.collapsed .nav-link span,  /* esconde texto y títulos */
+.sidebar.collapsed h6.section-title,
+.sidebar.collapsed .profile h5 {
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  overflow: hidden;
+}
+.sidebar.collapsed .profile {
+  padding: 2rem .5rem;
+}
+
+/* --- Perfil ------------------------------------------------ */
+.sidebar .profile {
+  text-align: center;
+  padding: 3rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,.25);
+  transition: padding var(--transicion);
+}
+.sidebar .profile i {
+  font-size: 4.5rem;
+  color: #fff;
+}
+.sidebar .profile h5 {
+  margin: 1.25rem 0 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #fff;
+  transition: opacity var(--transicion);
+}
+
+/* --- Títulos de sección ----------------------------------- */
+.sidebar h6.section-title {
+  margin: 2rem 1.5rem .75rem;
+  font-size: .75rem;
+  letter-spacing: .08em;
+  color: #ffffffbf;
+  text-transform: uppercase;
+  transition: opacity var(--transicion);
+}
+
+/* --- Enlaces de navegación -------------------------------- */
+.sidebar .nav-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: .85rem;
+  margin: .25rem 1rem;
+  padding: .75rem 1.25rem;
+  font-size: 1rem;
+  color: #fff;
+  border-left: 4px solid transparent;
+  border-radius: var(--radio-base) 0 0 var(--radio-base);
+  transition: background var(--transicion), border-color var(--transicion), transform var(--transicion);
+}
+.sidebar .nav-link i {
+  font-size: 1.15rem;
+  width: 1.25rem;
+  min-width: 1.25rem;
+  text-align: center;
+  transition: transform var(--transicion);
+}
+
+/* Hover y estados ----------------------------------------- */
+.sidebar .nav-link:hover {
+  background: rgba(255,255,255,.10);
+  border-color: #fff;
+  transform: translateX(3px);
+}
+.sidebar .nav-link:hover i {
+  transform: scale(1.15);
+}
+.sidebar .nav-link.active {
+  background: #fff;
+  color: var(--azul-oscuro);
+  border-color: #fff;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0,0,0,.12);
+}
+
+/* --- Botón de logout en la parte inferior ----------------- */
+.sidebar .logout {
+  margin-top: auto;
+  border-top: 1px solid rgba(255,255,255,.25);
+}
+.sidebar .logout .nav-link {
+  justify-content: center;
+  background: #dc3545;
+  border-left: none;
+  border-radius: 0;
+}
+.sidebar .logout .nav-link:hover {
+  background: #bb2d3b;
+}
+
+/* Scrollbar minimal ---------------------------------------- */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.4);
+  border-radius: 3px;
+}
+
+/* =====================================================
+   MAIN CONTENT
+   ===================================================== */
+.main-content {
+  margin-left: 250px;
+  padding: 2rem;
+  min-height: 100vh;
+  background: var(--gris-claro);
+  transition: margin-left var(--transicion);
+}
+.sidebar.collapsed + .main-content {
+  margin-left: 80px;
+}
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed; /* Asegura que el sidebar flote */
+    left: 0;
+    transform: translateX(-100%); /* Oculto por defecto */
+    transition: transform var(--transicion); /* Transición para que se deslice */
+    z-index: 1040; /* Asegura que esté por encima del contenido */
+    box-shadow: 0 0 15px rgba(0,0,0,0.2); /* Una sombra más fuerte en móvil para el pop-out */
+  }
+  .sidebar.show { /* Clase que se añade con JS para mostrar el sidebar */
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    overflow-x: hidden
+  }
+}
+
+/* =====================================================
+   BOTÓN HAMBURGUESA (solo móvil)
+   ===================================================== */
+.hamburger {
+  display: none;
+}
+@media (max-width: 768px) {
+  .hamburger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    padding: .65rem .9rem;
+    font-size: 1.4rem;
+    color: #fff;
+    background: var(--azul-csi);
+    border: none;
+    border-radius: var(--radio-base);
+    box-shadow: var(--sombra);
+    z-index: 1050;
+    transition: background var(--transicion), transform var(--transicion);
+  }
+  .hamburger:hover { background: var(--azul-oscuro); }
+  .hamburger:active { transform: scale(.95); }
+
+  /* Sidebar deslizable en móvil */
+  .sidebar      { transform: translateX(-100%); }
+  .sidebar.show { transform: translateX(0); }
+}
+
+/* =====================================================
+   BOTONES (utilities globales)
+   ===================================================== */
+.btn-csi {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .6rem 1.4rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  background: var(--azul-csi);
+  border: none;
+  border-radius: var(--radio-base);
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  cursor: pointer;
+  transition: background var(--transicion), transform var(--transicion), box-shadow var(--transicion);
+}
+.btn-csi:hover {
+  background: var(--azul-oscuro);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,.12);
+}
+.btn-csi:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0,0,0,.18);
+}
+.btn-csi:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Versión contorno --------------------------------------- */
+.btn-outline-csi {
+  background: transparent;
+  color: var(--azul-csi);
+  border: 2px solid currentColor;
+}
+.btn-outline-csi:hover {
+  background: var(--azul-csi);
+  color: #fff;
+}
+
+/* =====================================================
+   UTILIDADES EXTRA
+   ===================================================== */
+/* Quita la selección de texto de los íconos para una UX más pulida */
+.sidebar .nav-link,
+.sidebar .profile,
+.hamburger {
+  -webkit-user-select: none;
+  user-select: none;
+}
+

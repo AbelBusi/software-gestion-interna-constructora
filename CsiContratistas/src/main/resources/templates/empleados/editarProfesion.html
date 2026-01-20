@@ -1,0 +1,49 @@
+<div th:fragment="modalEditarProfesion">
+    <div class="modal fade" id="modalEditarProfesion" tabindex="-1" aria-labelledby="modalEditarProfesionLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form th:action="@{/administrador/profesiones/editar}" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalEditarProfesionLabel">Editar Profesión</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <input type="hidden" name="id_profesion" id="editarIdProfesion">
+                        <div class="mb-3">
+                            <label for="editarNombreProfesion" class="form-label">Nombre de la Profesión</label>
+                            <input type="text" class="form-control" name="nombre" id="editarNombreProfesion"
+                                   required pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+"
+                                   title="Solo se permiten letras y espacios."
+                                   oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');">
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="editarDescripcionProfesion" class="form-label">Descripción</label>
+                            <textarea class="form-control" name="descripcion" id="editarDescripcionProfesion" rows="3"
+                                      pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ0-9.,\s-]*"
+                                      title="Solo se permiten letras, números, espacios y signos básicos (.,-)."
+                                      oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9.,\s-]/g, '');"></textarea>
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="editarEstadoProfesion" class="form-label">Estado</label>
+                            <select class="form-select" name="estado" id="editarEstadoProfesion" required>
+                                <option value="true">Activo</option>
+                                <option value="false">Inactivo</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

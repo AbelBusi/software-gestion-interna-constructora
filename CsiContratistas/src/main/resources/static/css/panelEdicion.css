@@ -1,0 +1,43 @@
+/* Aplica el fondo azul solo a los th dentro de thead con clase personalizada */
+.encabezado-azul th {
+    background-color: #015bac !important;
+    color: white !important;
+}
+
+    /* Estilo para el panel */
+    .card-edicion {
+        border: 1px solid var(--azul-oscuro, #015bac);
+        box-shadow: 0 4px 12px rgba(1, 91, 172, 0.15);
+        border-radius: 1rem;
+    }
+
+    .card-edicion .card-header {
+        background-color: var(--azul-oscuro, #015bac);
+        color: white;
+        font-weight: bold;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+        font-size: 1.1rem;
+    }
+
+    /* Inputs azules */
+    .form-control:focus {
+        border-color: var(--azul-csi, #007acc);
+        box-shadow: 0 0 0 0.2rem rgba(0, 122, 204, 0.25);
+    }
+
+    /* Botón Cancelar con azul */
+    .btn-csi {
+        background-color: var(--azul-csi, #007acc);
+        border-color: var(--azul-csi, #007acc);
+        color: white;
+    }
+
+    .btn-csi:hover {
+        background-color: var(--azul-oscuro, #015bac);
+        border-color: var(--azul-oscuro, #015bac);
+    }
+
+    .form-floating > label {
+        color: #6c757d;
+    }

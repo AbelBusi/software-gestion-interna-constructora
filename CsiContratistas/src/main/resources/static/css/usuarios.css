@@ -1,0 +1,439 @@
+/* ========================================== */
+/*                ESTILOS BASE               */
+/* ========================================== */
+.nav-pills {
+    box-shadow: 0 2px 8px rgba(1,91,172,0.08);
+    border-radius: 10px;
+    padding: 0.25rem 0.5rem;
+    background: #f8f9fa;
+}
+.nav-pills .nav-link.active {
+    background-color: #015bac;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 8px;
+}
+.nav-pills .nav-link {
+    transition: background 0.2s, color 0.2s;
+}
+.encabezado-azul th {
+    background-color: #015bac !important;
+    color: white !important;
+    padding: 10px 8px !important;
+    font-size: 0.9rem;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+}
+
+.table {
+    overflow: hidden;
+    padding: 0.2rem;
+}
+
+.table th, .table td {
+    border: none;
+    padding: 8px 10px !important;
+    font-size: 0.85rem;
+    vertical-align: middle;
+}
+
+.btn {
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn-sm {
+    padding: 3px 8px;
+    font-size: 0.8rem;
+    border-radius: 4px;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    border-color: #3498db;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+.btn-warning {
+    background-color: #f39c12;
+    border-color: #f39c12;
+    color: white;
+}
+
+.btn-warning:hover {
+    background-color: #e67e22;
+    border-color: #e67e22;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    border-color: #e74c3c;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+    border-color: #c0392b;
+}
+
+.btn-ver-detalles {
+    padding: 0px;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-color: #015bac;
+    flex-shrink: 0;
+}
+
+.btn-ver-detalles i {
+    margin: 0;
+    color: #015bac;
+}
+
+.btn-accion-usuario {
+    padding: 4px 10px;
+    font-size: 0.75rem;
+}
+
+
+.custom-table td .btn {
+    margin-right: 4px;
+    margin-bottom: 2px;
+    padding: 3px 8px;
+    font-size: 0.8rem;
+    min-width: 70px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-table td .btn:last-child {
+    margin-right: 0;
+}
+.text-truncate {
+    max-width: 180px;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ========================================== */
+/*           FORMULARIOS Y MODALES           */
+/* ========================================== */
+
+.modal-content {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    max-width: 500px;
+    margin: auto;
+}
+
+.modal-header,
+.modal-footer {
+    padding: 10px 16px;
+}
+
+.modal-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.modal-body {
+    padding: 14px 16px;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #2c3e50;
+    margin-bottom: 8px;
+}
+
+.form-control {
+    border-radius: 5px;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    font-size: 0.95rem;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+}
+
+.alert {
+    border-radius: 5px;
+    padding: 12px 15px;
+}
+
+.alert-danger {
+    background-color: #fadbd8;
+    border-color: #f8c9c5;
+    color: #e74c3c;
+}
+
+/* ========================================== */
+/*         FILTROS Y ENCABEZADOS LISTA       */
+/* ========================================== */
+
+#filtroNombre, #filtroEmail, #filtroRol {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    height: 36px !important;
+}
+
+.btn-primary,
+#filtroRol {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    height: 36px;
+}
+
+.row.mb-3.align-items-stretch {
+    margin-bottom: 1rem !important;
+}
+
+.d-flex.flex-wrap.justify-content-between.align-items-center.mb-3.pb-2.border-bottom {
+    margin-bottom: 0.75rem !important;
+    padding-bottom: 0.5rem !important;
+}
+
+/* ========================================== */
+/*             RESPONSIVE ADAPTS             */
+/* ========================================== */
+
+@media (max-width: 576px) {
+    .modal-content {
+        max-width: 98vw;
+        padding: 0;
+    }
+
+    .modal-header,
+    .modal-footer,
+    .modal-body {
+        padding: 8px 8px;
+    }
+
+    .modal-title {
+        font-size: 1rem;
+    }
+
+    .form-label,
+    .form-control {
+        font-size: 0.95rem;
+    }
+
+    .btn {
+        font-size: 0.75rem;
+        padding: 4px 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    .custom-table th,
+    .custom-table td {
+        padding: 3px 2px;
+        font-size: 0.8rem;
+    }
+
+    .custom-table td .btn {
+        padding: 2px 6px;
+        font-size: 0.75rem;
+        min-width: 60px;
+        height: 28px;
+    }
+
+    .password-validation-grid {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        padding: 0;
+    }
+
+    .validation-item {
+        padding: 6px 8px;
+    }
+
+    .validation-text {
+        font-size: 0.9rem;
+    }
+
+    .row .col, .col-auto {
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .custom-table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .custom-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+}
+
+/* ========================================== */
+/*     VALIDACIÓN DE CONTRASEÑA ESTILOS      */
+/* ========================================== */
+
+.password-input-group {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.password-input-group:focus-within {
+    box-shadow: 0 4px 16px rgba(52, 152, 219, 0.3);
+    transform: translateY(-1px);
+}
+
+.password-field {
+    border: 2px solid #e9ecef;
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    padding: 12px 16px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.password-field::placeholder {
+    color: #adb5bd;
+    font-style: italic;
+}
+
+.password-field:focus {
+    border-color: #3498db;
+    box-shadow: none;
+    outline: none;
+}
+
+.password-toggle {
+    border: 2px solid #e9ecef;
+    border-left: none;
+    border-radius: 0 12px 12px 0;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+}
+
+.password-toggle:hover {
+    background: linear-gradient(135deg, #2980b9, #1f5f8b);
+    transform: scale(1.05);
+}
+
+.password-toggle:active {
+    transform: scale(0.95);
+}
+
+.password-strength {
+    margin-top: 16px;
+}
+
+.strength-bar {
+    height: 6px;
+    background: linear-gradient(90deg, #e9ecef 0%, #e9ecef 100%);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+}
+
+.strength-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 3px;
+    transition: all 0.5s ease;
+    background: linear-gradient(90deg, #e74c3c, #f39c12, #f1c40f, #2ecc71);
+}
+
+.strength-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.password-validation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 8px;
+    margin-top: 20px;
+    padding: 0;
+}
+
+.validation-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: #fff;
+    border-radius: 6px;
+    transition: color 0.3s;
+    margin-bottom: 0;
+}
+
+.validation-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.validation-icon i {
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.validation-text {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #888;
+    transition: color 0.3s;
+}
+
+.validation-item.pending .validation-icon i,
+.validation-item.pending .validation-text {
+    color: #888;
+}
+
+.validation-item.valid .validation-icon i,
+.validation-item.valid .validation-text {
+    color: #27ae60;
+}
+
+.validation-item.invalid .validation-icon i,
+.validation-item.invalid .validation-text {
+    color: #888;
+}

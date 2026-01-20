@@ -1,0 +1,25 @@
+    :root{
+      --csi-prim:#0d6efd;        /* azul base (Bootstrap “primary”) */
+      --csi-prim-dark:#0547b4;   /* tono más oscuro */
+      --csi-bg:#f6f9ff;          /* gris-azulado muy claro */
+    }
+    body{background:var(--csi-bg);}
+    /* Pills */
+    .nav-pills .nav-link{
+      color:var(--csi-prim);
+      font-weight:600;
+    }
+    .nav-pills .nav-link.active{
+      background:var(--csi-prim);
+      color:#fff;
+    }
+    /* Títulos */
+    h2{color:var(--csi-prim-dark);}
+    /* Tablas */
+    .table thead{background:var(--csi-prim-dark);color:#fff;}
+    .table-hover tbody tr:hover{background:rgba(13,110,253,.1);}
+    /* Panel edición */
+    .edit-card{
+      border:1px solid var(--csi-prim);
+      box-shadow:0 0 8px rgba(13,110,253,.25);
+    }

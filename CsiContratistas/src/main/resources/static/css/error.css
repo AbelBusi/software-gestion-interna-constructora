@@ -1,0 +1,46 @@
+        .not-found-container {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(to bottom, #e6f0fa, #ffffff);
+        }
+
+        .not-found-container h1 {
+            font-size: 8rem;
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        .not-found-container h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .not-found-container p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .not-found-container a.btn-primary {
+            background-color: #007BFF;
+            border-color: #007BFF;
+            font-weight: bold;
+            padding: 10px 25px;
+            font-size: 1.1rem;
+        }
+
+        .not-found-container img {
+            max-width: 280px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .not-found-container h1 {
+                font-size: 5rem;
+            }
+
+            .not-found-container h2 {
+                font-size: 2rem;
+            }
+        }

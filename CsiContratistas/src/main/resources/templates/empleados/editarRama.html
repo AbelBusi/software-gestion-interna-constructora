@@ -1,0 +1,58 @@
+<div th:fragment="modalEditarRama">
+  <div class="modal fade" id="modalEditarRama" tabindex="-1" aria-labelledby="modalEditarRamaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form th:action="@{/administrador/ramas/editar}" method="post">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalEditarRamaLabel">Editar Rama</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <div class="modal-body">
+            <input type="hidden" name="id_rama" id="editarIdRama">
+            <div class="mb-3">
+              <label for="editarRamaNombre" class="form-label">Nombre de la Rama</label>
+              <input type="text" class="form-control" name="nombre" id="editarRamaNombre"
+                     required pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+"
+                     title="Solo se permiten letras y espacios."
+                     oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');">
+              <div class="invalid-feedback"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="editarRamaDescripcion" class="form-label">Descripción</label>
+              <textarea class="form-control" name="descripcion" id="editarRamaDescripcion" rows="3"
+                        pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ0-9.,\s-]*"
+                        title="Solo se permiten letras, números, espacios y signos básicos (.,-)."
+                        oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9.,\s-]/g, '');"></textarea>
+              <div class="invalid-feedback"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="editarRamaProfesion" class="form-label">Profesión Asociada</label>
+              <select class="form-select" name="id_profesion" id="editarRamaProfesion" required>
+                <option value="">Seleccione una profesión...</option>
+                <option th:each="prof : ${profesiones}" th:value="${prof.id_profesion}" th:text="${prof.nombre}"></option>
+              </select>
+              <div class="invalid-feedback"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="editarRamaEstado" class="form-label">Estado</label>
+              <select class="form-select" name="estado" id="editarRamaEstado" required>
+                <option value="true">Activo</option>
+                <option value="false">Inactivo</option>
+              </select>
+              <div class="invalid-feedback"></div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

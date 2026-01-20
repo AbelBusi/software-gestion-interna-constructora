@@ -1,0 +1,42 @@
+<div th:fragment="modalNuevoTipoMaterial">
+  <!-- Modal Nuevo Tipo de Material -->
+  <div class="modal fade" id="modalNuevoTipoMaterial" tabindex="-1" aria-labelledby="modalNuevoTipoMaterialLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <form th:action="@{/administrador/tipos-material/guardar}" method="post">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalNuevoTipoMaterialLabel">Nuevo Tipo de Material</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="nuevoNombreTipo" class="form-label">Nombre</label>
+              <input type="text" class="form-control" name="nombre" id="nuevoNombreTipo" required>
+            </div>
+            <div class="mb-3">
+              <label for="nuevoDescripcionTipo" class="form-label">Descripción</label>
+              <input type="text" class="form-control" name="descripcion" id="nuevoDescripcionTipo" required>
+            </div>
+            <div class="mb-3">
+              <label for="nuevoClasificacionTipo" class="form-label">Clasificación</label>
+              <select class="form-select" name="clasificacion" required>
+                <option value="" disabled selected>Seleccione...</option>
+                <option value="ESTRUCTURAL">Estructural</option>
+                <option value="INSTALACIONES">Instalaciones (Eléctricas/Hidráulicas)</option>
+                <option value="ACABADOS">Acabados</option>
+                <option value="PROTECCION">Protección y Seguridad</option>
+                <option value="AISLAMIENTO">Aislamiento (Térmico/Acústico)</option>
+                <option value="COMPLEMENTARIOS">Complementarios</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
