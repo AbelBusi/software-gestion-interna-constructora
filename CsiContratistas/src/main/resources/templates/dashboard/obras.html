@@ -1,0 +1,1234 @@
+<!-- dashboard/obras.html -->
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Obras</title>
+
+    <link rel="stylesheet" th:href="@{/css/menu.css}">
+
+    <link rel="stylesheet" th:href="@{/css/panelEdicion.css}">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+
+
+
+
+</head>
+
+<style>
+.modal-content {
+    border-radius: 1rem;
+}
+
+.modal-body input, .modal-body select {
+    font-size: 0.95rem;
+}
+
+.modal-footer button {
+    min-width: 110px;
+}
+#detalleContenido dl {
+  margin: 0;
+}
+#detalleContenido dt {
+  font-weight: 600;
+  color: #003f7f;
+}
+#detalleContenido dd {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+</style>
+
+<body>
+
+
+<!-- Botón hamburguesa (mantener) -->
+<button class="hamburger" onclick="toggleSidebar()">
+    <i class="fa fa-bars"></i>
+</button>
+
+<!-- ========== SIDEBAR (Fragmento) ========== -->
+<div th:insert="~{dashboard/sidebar.html::sidebar}"></div>
+
+<!-- ========== MAIN ========== -->
+<!-- CONTENIDO PRINCIPAL -->
+<div class="main-content p-4">
+    <h2 class="mb-4 d-flex align-items-center"><i class="fa-solid fa-building me-2 text-primary"></i>Gestión de Obras
+    </h2>
+
+    <ul class="nav nav-pills mb-4" id="obrasTabs" role="tablist">
+        <li class="nav-item">
+            <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#pane-resumen">Obras</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pane-clientes">Clientes</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pane-terrenos">Terrenos</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pane-modelo-obras">Modelo de Obras</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pane-modelo-tipoConstruccion">Tipo de
+                Construccion
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+
+        <!-- OBRAS -->
+        <div class="tab-pane fade show active" id="pane-resumen">
+            <h5 class="fw-bold mb-3">Listado de Obras</h5>
+
+            <div class="d-flex justify-content-end mb-3">
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#obraModal"
+                        onclick="nuevaObra()">
+                    <i class="fa fa-plus me-1"></i> Nueva Obra
+                </button>
+            </div>
+
+
+            <!-- Tabla de Obras -->
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="encabezado-azul">
+                    <tr class="text-center">
+                        <th>ID de la Obra</th>
+                        <th>Nombre</th>
+                        <th>Responsable</th>
+                        <th>Modelo</th>
+                        <th>Terreno</th>
+                        <th>Tipo Construcción</th>
+                        <th>Inicio</th>
+                        <th>Finalización</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                        <th>Reporte Financiamiento</th> </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="obra, iter : ${obras}" th:if="${obra.estado}"
+                        th:data-id="${obra.id_obra}"
+                        th:data-nombre="${obra.nombre}"
+                        th:data-responsable="${obra.id_responsable}"
+                        th:data-modelo="${obra.id_modelo_obra}"
+                        th:data-terreno="${obra.id_terreno}"
+                        th:data-tipo="${obra.id_tipo_construccion}"
+                        th:data-inicio="${obra.fecha_inicio}"
+                        th:data-fin="${obra.fecha_finalizacion}"
+                        th:data-estado="${obra.estado}"
+                        onclick="cargarObra(this)">
+
+                        <td th:text="${iter.index + 1}" class="text-center">1</td>
+                        <td th:text="${obra.nombre}">Nombre</td>
+
+                        <td class="text-center">
+                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                    th:if="${obra.id_responsable != null}"
+                                    th:onclick="|event.stopPropagation(); verDetalle(event, 'responsable', ${obra.id_responsable})|">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </td>
+
+                        <td class="text-center">
+                            <button type="button" class="btn btn-outline-secondary btn-sm"
+                                    th:onclick="|event.stopPropagation(); verDetalle(event, 'modelo', ${obra.id_modelo_obra})|">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </td>
+
+                        <td class="text-center">
+                            <button type="button" class="btn btn-outline-success btn-sm"
+                                    th:onclick="|event.stopPropagation(); verDetalle(event, 'terreno', ${obra.id_terreno})|">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </td>
+
+                        <td class="text-center">
+                            <button type="button" class="btn btn-outline-warning btn-sm"
+                                    th:onclick="|event.stopPropagation(); verDetalle(event, 'tipo', ${obra.id_tipo_construccion})|">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </td>
+
+                        <td class="text-center" th:text="${#temporals.format(obra.fecha_inicio, 'dd/MM/yyyy')}">Inicio</td>
+                        <td class="text-center" th:text="${#temporals.format(obra.fecha_finalizacion, 'dd/MM/yyyy')}">Fin</td>
+                        <td class="text-center" th:text="${obra.estado ? 'Activa' : 'Inactiva'}">Estado</td>
+
+                        <td class="text-center">
+                            <button class="btn btn-warning btn-sm me-1"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#formObra"
+                                    onclick="editarObra(this.closest('tr'))">
+                                <i class="fa fa-edit"></i>
+                            </button>
+
+                            <button class="btn btn-info btn-sm me-1"
+                                    onclick="verFinanciamiento(this.closest('tr'))"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalFinanciamiento">
+                                <i class="fa fa-dollar-sign"></i>
+                            </button>
+
+                            <button class="btn btn-danger btn-sm"
+                                    onclick="eliminarObra(this.closest('tr'))">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+
+                        <td class="text-center">
+                            <button class="btn btn-primary btn-sm"
+                                    th:data-obra-id="${obra.id_obra}"
+                                    onclick="descargarReporteFinanciamientoPorObra(this)">
+                                <i class="fa fa-file-pdf"></i> PDF
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal para Editar Obra -->
+            <div class="modal fade" id="formObra" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content shadow border-0 rounded-4 overflow-hidden">
+
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title fw-bold">
+                                <i class="fa fa-edit me-2"></i> Editar Obra
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body px-4 py-3">
+                            <form id="obraForm">
+                                <input type="hidden" id="obraId">
+
+                                <div class="mb-3">
+                                    <label for="obraNombre" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="obraNombre" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="obraResponsable" class="form-label">Responsable</label>
+                                    <div class="input-group">
+                                        <select id="obraResponsable" class="form-select" required></select>
+                                        <button class="btn btn-outline-primary" type="button" onclick="verSeleccionado('responsable', 'obraResponsable')">
+                                            <i class="fa fa-info-circle"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="obraModelo" class="form-label">Modelo</label>
+                                    <div class="input-group">
+                                        <select id="obraModelo" class="form-select" required></select>
+                                        <button class="btn btn-outline-secondary" type="button" onclick="verSeleccionado('modelo', 'obraModelo')">
+                                            <i class="fa fa-info-circle"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="obraTerreno" class="form-label">Terreno</label>
+                                    <div class="input-group">
+                                        <select id="obraTerreno" class="form-select" required></select>
+                                        <button class="btn btn-outline-success" type="button" onclick="verSeleccionado('terreno', 'obraTerreno')">
+                                            <i class="fa fa-info-circle"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="obraTipo" class="form-label">Tipo de Construcción</label>
+                                    <div class="input-group">
+                                        <select id="obraTipo" class="form-select" required></select>
+                                        <button class="btn btn-outline-warning" type="button" onclick="verSeleccionado('tipo', 'obraTipo')">
+                                            <i class="fa fa-info-circle"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="obraInicio" class="form-label">Fecha de Inicio</label>
+                                    <input type="date" class="form-control" id="obraInicio" required readonly>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="obraFin" class="form-label">Fecha de Finalización</label>
+                                    <input type="date" class="form-control" id="obraFin" required>
+                                </div>
+
+
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fa fa-save me-1"></i> Guardar Cambios
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal de Financiamiento -->
+            <div class="modal fade" id="modalFinanciamiento" tabindex="-1">
+                <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                    <div class="modal-content shadow-lg border-0 rounded-4">
+
+                        <div class="modal-header bg-info text-white">
+                            <h5 class="modal-title">
+                                <i class="fa fa-dollar-sign me-2"></i> Detalle de Financiamiento
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body px-4 py-3">
+                            <!-- Botón para generar PDF -->
+                            <div id="detalleFinanciamiento">
+                                <!-- Aquí va el contenido dinámico -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- Modal Detalle -->
+        <div class="modal fade" id="detalleModal" tabindex="-1" onhidden="historialDetalle.length = 0;">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content shadow-lg border-0 rounded-4 overflow-hidden">
+
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title fw-bold"><i class="fa fa-circle-info me-2"></i>Detalle de Información</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body p-4" id="detalleContenido">
+                        <div class="text-center text-muted">
+                            <i class="fa fa-spinner fa-spin fa-2x"></i>
+                            <p class="mt-3">Cargando datos...</p>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer bg-light px-4 py-3">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fa fa-times me-1"></i> Cerrar
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- CLIENTES -->
+        <div class="tab-pane fade" id="pane-clientes">
+            <h5 class="fw-bold">Clientes </h5>
+            <div class="d-flex flex-wrap align-items-center mb-3 pb-2 border-bottom gap-2">
+                <button class="btn btn-primary d-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#clienteModal"
+                        onclick="nuevoCliente()">
+                    <i class="fa fa-plus me-1"></i>Nuevo Cliente
+                </button>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="buscarCliente" placeholder="Buscar por nombre, RUC, DNI o correo...">
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" id="filtroTipo">
+                        <option value="">Todos los tipos</option>
+                        <option value="PERSONA">Persona</option>
+                        <option value="EMPRESA">Empresa</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" id="filtroEstado">
+                        <option value="">Todos los estados</option>
+                        <option value="true">Activos</option>
+                        <option value="false">Inactivos</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary w-100" id="btnLimpiarFiltros">
+                        <i class="bi bi-x-circle"></i> Limpiar
+                    </button>
+                </div>
+
+            </div>
+
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="encabezado-azul">
+                    <tr>
+                        <th>#</th>
+                        <th>Tipo</th>
+                        <th>Documento</th>
+                        <th>Nombre/Razón Social</th>
+<!--                        <th>Nombre Comercial</th>-->
+                        <th>Correo</th>
+                        <th>Teléfono</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tablaClientes">
+                    <tr th:each="cliente, iter : ${clientes}"
+                        th:data-id="${cliente.id_cliente}"
+                        th:data-tipo="${cliente.tipo_cliente}"
+                        th:data-dni="${cliente.dni}"
+                        th:data-nombre="${cliente.nombre}"
+                        th:data-ruc="${cliente.ruc}"
+                        th:data-razon="${cliente.razon_social}"
+                        th:data-comercial="${cliente.nombre_comercial}"
+                        th:data-correo="${cliente.correo}"
+                        th:data-telefono="${cliente.telefono}"
+                        th:data-estado="${cliente.estado}"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#formCliente"
+                        onclick="cargarCliente(this)">
+                        <td th:text="${iter.index + 1}">1</td>
+                        <td>
+                            <span th:text="${cliente.tipo_cliente}"
+                                  th:class="${cliente.tipo_cliente == 'PERSONA'} ? 'badge bg-info' : 'badge bg-primary'">
+                                TIPO
+                            </span>
+                        </td>
+                        <!-- Documento (DNI o RUC) -->
+                        <td>
+                            <div class="fw-bold">
+                                <span th:if="${cliente.tipo_cliente == 'PERSONA'}" th:text="${cliente.dni}">DNI</span>
+                                <span th:if="${cliente.tipo_cliente == 'EMPRESA'}" th:text="${cliente.ruc}">RUC</span>
+                            </div>
+                            <small class="text-muted">
+                                (<span th:text="${cliente.tipo_cliente == 'PERSONA'} ? 'DNI' : 'RUC'"></span>)
+                            </small>
+                        </td>
+                        <!-- Nombre o Razón Social -->
+                        <td>
+                            <span th:if="${cliente.tipo_cliente == 'PERSONA'}" th:text="${cliente.nombre}">Nombre</span>
+                            <span th:if="${cliente.tipo_cliente == 'EMPRESA'}" th:text="${cliente.razon_social}">Razón Social</span>
+                        </td>
+                        <!-- Nombre Comercial (solo para empresas) -->
+<!--                        <td>-->
+<!--                            <span th:if="${cliente.tipo_cliente == 'EMPRESA'}" th:text="${cliente.nombre_comercial}">Comercial</span>-->
+<!--                            <span th:if="${cliente.tipo_cliente == 'PERSONA'}">-</span>-->
+<!--                        </td>-->
+                        <td th:text="${cliente.correo}">Correo</td>
+                        <td th:text="${cliente.telefono}">Teléfono</td>
+                        <td>
+                            <span th:if="${cliente.estado}" class="badge bg-success">Activo</span>
+                            <span th:unless="${cliente.estado}" class="badge bg-danger">Inactivo</span>
+                        </td>
+                        <td>
+                            <button class="btn btn-warning btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#clienteModal"
+                                    onclick="editarCliente(this.parentElement.parentElement)">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm"
+                                    onclick="eliminarCliente(this.closest('tr'))">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal Cliente -->
+            <div class="modal fade" id="clienteModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-md">
+                    <div class="modal-content shadow rounded-3">
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title fw-bold">Formulario de Cliente</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <form id="clienteForm" onsubmit="guardarCliente(event)">
+                                <input type="hidden" id="clienteId">
+
+                                <!-- Tipo Cliente -->
+                                <div class="mb-3">
+                                    <label class="form-label">Tipo de Cliente</label>
+                                    <select class="form-select" id="clienteTipo" onchange="ajustarFormulario()">
+                                        <option value="" disabled selected>Seleccione</option>
+                                        <option value="PERSONA">Persona</option>
+                                        <option value="EMPRESA">Empresa</option>
+                                    </select>
+                                </div>
+
+                                <!-- Persona -->
+                                <div id="grupoPersona" style="display: none;">
+                                    <div class="mb-3">
+                                        <label class="form-label">DNI</label>
+                                        <input type="text" class="form-control" id="clienteDni" placeholder="DNI">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Nombre</label>
+                                        <input type="text" class="form-control" id="clienteNombre" placeholder="Nombre">
+                                    </div>
+                                </div>
+
+                                <!-- Empresa -->
+                                <div id="grupoEmpresa" style="display: none;">
+                                    <div class="mb-3">
+                                        <label class="form-label">RUC</label>
+                                        <input type="text" class="form-control" id="clienteRuc" placeholder="RUC">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Razón Social</label>
+                                        <input type="text" class="form-control" id="clienteRazon" placeholder="Razón Social">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Nombre Comercial</label>
+                                        <input type="text" class="form-control" id="clienteComercial" placeholder="Nombre Comercial">
+                                    </div>
+                                </div>
+
+                                <!-- Comunes -->
+                                <div class="mb-3">
+                                    <label class="form-label">Correo</label>
+                                    <input type="email" class="form-control" id="clienteCorreo" placeholder="Correo">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Teléfono</label>
+                                    <input type="text" class="form-control" id="clienteTelefono" placeholder="Teléfono">
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-success" onclick="guardarCliente(event)">
+                                <i class="fa fa-save me-1"></i>Guardar
+                            </button>
+                            <button class="btn btn-secondary" data-bs-dismiss="modal">
+                                <i class="fa fa-times me-1"></i>Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- TERRENOS -->
+        <div class="tab-pane fade" id="pane-terrenos">
+
+            <h5 class="mt-4">Tabla de Terrenos</h5>
+
+            <!-- ===================  TABLA DE TERRENOS  =================== -->
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="encabezado-azul">
+                    <tr>
+                        <th>#</th>
+                        <th>Acceso Vial</th>
+                        <th>Área Total</th>
+                        <th>Área Útil</th>
+                        <th>Frente (m)</th>
+                        <th>Fondo (m)</th>
+                        <th>Zonificación</th>
+                        <th>Servicios</th>
+                        <th>Coordenadas</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="ter, iter : ${terrenos}"
+                        th:data-id="${ter.id_terreno}"
+                        th:data-id_tipo_suelo="${ter.id_tipo_suelo}"
+                        th:data-id_forma_terreno="${ter.id_forma_terreno}"
+                        th:data-area_total="${ter.area_total}"
+                        th:data-area_util="${ter.area_util}"
+                        th:data-frente_metros="${ter.frente_metros}"
+                        th:data-fondo_metros="${ter.fondo_metros}"
+                        th:data-zonificacion="${ter.zonificacion}"
+                        th:data-servicios_basicos="${ter.servicios_basicos}"
+                        th:data-acceso_vial="${ter.acceso_vial}"
+                        th:data-observaciones="${ter.observaciones}"
+                        th:data-coordenadas="${ter.coordenadas}"
+                        th:data-fecha_asignacion="${ter.fecha_asignacion}"
+                        onclick="seleccionarTerreno(this)">
+
+                        <td th:text="${iter.index + 1}">1</td>
+                        <td th:text="${ter.acceso_vial ?: '—'}">Av. Principal</td>
+                        <td th:text="${ter.area_total ?: 0}">0</td>
+                        <td th:text="${ter.area_util ?: 0}">0</td>
+                        <td th:text="${ter.frente_metros ?: 0}">0</td>
+                        <td th:text="${ter.fondo_metros ?: 0}">0</td>
+                        <td th:text="${ter.zonificacion ?: '—'}">N/D</td>
+                        <td th:text="${ter.servicios_basicos ? 'Sí' : 'No'}">Sí</td>
+                        <td th:text="${ter.coordenadas ?: '—'}">-</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ===================  FORMULARIO DE EDICIÓN  =================== -->
+            <div class="card card-edicion mt-3">
+                <div class="card-header ">Editar Terreno</div>
+                <div class="card-body">
+                    <form id="form-terrenos" onsubmit="guardarTerreno(event)">
+                        <input type="hidden" id="terId">
+                        <input type="hidden" id="terFechaAsignacion">
+
+                        <div class="row g-3">
+                            <div class="col-md-6 form-floating">
+                                <select class="form-select" id="terTipoSuelo" required>
+                                    <option value="" disabled selected>Seleccione un tipo de suelo</option>
+                                    <option th:each="ts : ${tiposSuelo}"
+                                            th:value="${ts.id_tipo_suelo}"
+                                            th:text="${ts.nombre}"
+                                            th:if="${ts.estado}"></option>
+                                </select>
+                                <label>Tipo de suelo</label>
+                            </div>
+
+                            <div class="col-md-6 form-floating">
+                                <select class="form-select" id="terFormaTerreno" required>
+                                    <option value="" disabled selected>Seleccione una forma de terreno</option>
+                                    <option th:each="ft : ${formasTerreno}"
+                                            th:value="${ft.id_forma_terreno}"
+                                            th:text="${ft.nombre}"
+                                            th:if="${ft.estado}"></option>
+                                </select>
+                                <label>Forma de terreno</label>
+                            </div>
+
+                            <div class="col-md-4 form-floating">
+                                <input type="number" class="form-control" id="terAreaTotal" placeholder="Área total"
+                                       required>
+                                <label>Área total (m²)</label>
+                            </div>
+
+                            <div class="col-md-4 form-floating">
+                                <input type="number" class="form-control" id="terAreaUtil" placeholder="Área útil"
+                                       required>
+                                <label>Área útil (m²)</label>
+                            </div>
+
+                            <div class="col-md-4 form-floating">
+                                <input type="number" class="form-control" id="terFrente" placeholder="Frente (m)"
+                                       required>
+                                <label>Frente (m)</label>
+                            </div>
+
+                            <div class="col-md-4 form-floating">
+                                <input type="number" class="form-control" id="terFondo" placeholder="Fondo (m)"
+                                       required>
+                                <label>Fondo (m)</label>
+                            </div>
+
+                            <div class="col-md-4 form-floating">
+                                <input type="text" class="form-control" id="terZonificacion" placeholder="Zonificación"
+                                       required>
+                                <label>Zonificación</label>
+                            </div>
+
+                            <div class="col-md-4 form-floating">
+                                <select class="form-select" id="terServicios" required>
+                                    <option value="true">Con servicios básicos</option>
+                                    <option value="false">Sin servicios básicos</option>
+                                </select>
+                                <label>Servicios básicos</label>
+                            </div>
+
+                            <div class="col-md-6 form-floating">
+                                <input type="text" class="form-control" id="terAcceso" placeholder="Acceso vial">
+                                <label>Acceso vial</label>
+                            </div>
+
+                            <div class="col-md-6 form-floating">
+                                <input type="text" class="form-control" id="terCoordenadas" placeholder="Coordenadas">
+                                <label>Coordenadas</label>
+                            </div>
+
+                            <div class="col-md-6 form-floating">
+                                <input type="text" class="form-control" id="terObservaciones"
+                                       placeholder="Observaciones">
+                                <label>Observaciones</label>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button class="btn btn-success btn-sm"><i class="fa-solid fa-save me-1"></i>Guardar</button>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="eliminarTerreno()"><i
+                                    class="fa-solid fa-trash me-1"></i>Eliminar
+                            </button>
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="limpiarFormularioTerreno()">
+                                Cancelar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- AÑADE AQUÍ Formas de terreno -->
+            <div id="alerta-forma-terreno"></div>
+
+            <!-- TABLA DE FORMAS DE TERRENO -->
+            <h5 class="fw-bold mt-4 d-flex justify-content-between align-items-center">
+                Formas de Terreno
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#formaTerrenoModal" onclick="limpiarFormularioForma()">
+                    <i class="fa fa-plus"></i> Nuevo
+                </button>
+            </h5>
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="encabezado-azul">
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="forma, iter : ${formasTerreno}" th:if="${forma.estado}"
+                        th:data-id="${forma.id_forma_terreno}"
+                        th:data-nombre="${forma.nombre}"
+                        th:data-descripcion="${forma.descripcion}"
+                        th:data-estado="${forma.estado}">
+                        <td th:text="${iter.index + 1}">1</td>
+                        <td th:text="${forma.nombre}">Plano</td>
+                        <td th:text="${forma.descripcion}">Terreno plano</td>
+                        <td th:text="${forma.estado ? 'Activo' : 'Inactivo'}">Activo</td>
+                        <td>
+                            <!-- Botón Editar -->
+                            <button class="btn btn-warning btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#formaTerrenoModal"
+                                    onclick="seleccionarForma(this.closest('tr'))">
+                                <i class="fa fa-edit"></i> Editar
+                            </button>
+
+                            <!-- Botón Eliminar -->
+                            <button class="btn btn-danger btn-sm"
+                                    onclick="seleccionarForma(this.closest('tr')); eliminarFormaTerreno();">
+                                <i class="fa fa-trash"></i> Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal Forma Terreno -->
+            <div class="modal fade" id="formaTerrenoModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-md">
+                    <div class="modal-content shadow rounded-3">
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title fw-bold">Formulario de Forma de Terreno</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <form id="form-forma-terreno" onsubmit="guardarFormaTerreno(event)">
+                                <input type="hidden" id="formaId">
+                                <input type="hidden" id="formaEstado" value="true"> <!-- Estado oculto por defecto -->
+
+                                <div class="mb-3">
+                                    <label class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="formaNombre" placeholder="Nombre" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Descripción</label>
+                                    <input type="text" class="form-control" id="formaDescripcion" placeholder="Descripción" required>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-success" onclick="guardarFormaTerreno(event)">
+                                <i class="fa fa-save me-1"></i> Guardar
+                            </button>
+                            <button class="btn btn-secondary" data-bs-dismiss="modal">
+                                <i class="fa fa-times me-1"></i> Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AÑADE AQUÍ Tipos de Suelo -->
+            <h5 class="fw-bold mt-5 d-flex justify-content-between align-items-center">
+                Tipos de Suelo
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#tipoSueloModal" onclick="limpiarFormularioTipoSuelo()">
+                    <i class="fa fa-plus"></i> Nuevo
+                </button>
+            </h5>
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="encabezado-azul">
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="suelo, iter : ${tiposSuelo}" th:if="${suelo.estado}"
+                        th:data-id="${suelo.id_tipo_suelo}"
+                        th:data-nombre="${suelo.nombre}"
+                        th:data-descripcion="${suelo.descripcion}"
+                        th:data-estado="${suelo.estado}">
+                        <td th:text="${iter.index + 1}">1</td>
+                        <td th:text="${suelo.nombre}">Nombre</td>
+                        <td th:text="${suelo.descripcion}">Descripción</td>
+                        <td th:text="${suelo.estado ? 'Activo' : 'Inactivo'}">Activo</td>
+                        <td>
+                            <!-- Botón Editar -->
+                            <button class="btn btn-warning btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#tipoSueloModal"
+                                    onclick="seleccionarTipoSuelo(this.closest('tr'))">
+                                <i class="fa fa-edit"></i> Editar
+                            </button>
+
+                            <!-- Botón Eliminar -->
+                            <button class="btn btn-danger btn-sm"
+                                    onclick="seleccionarTipoSuelo(this.closest('tr')); eliminarTipoSuelo();">
+                                <i class="fa fa-trash"></i> Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal Tipo Suelo -->
+            <div class="modal fade" id="tipoSueloModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-md">
+                    <div class="modal-content shadow rounded-3">
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title fw-bold">Formulario de Tipo de Suelo</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <form id="form-tipo-suelo" onsubmit="guardarTipoSuelo(event)">
+                                <input type="hidden" id="tipoSueloId">
+                                <input type="hidden" id="tipoSueloEstado" value="true"> <!-- Estado oculto -->
+
+                                <div class="mb-3">
+                                    <label class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="tipoSueloNombre" placeholder="Nombre" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Descripción</label>
+                                    <input type="text" class="form-control" id="tipoSueloDescripcion" placeholder="Descripción" required>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-success" onclick="guardarTipoSuelo(event)">
+                                <i class="fa fa-save me-1"></i> Guardar
+                            </button>
+                            <button class="btn btn-secondary" data-bs-dismiss="modal">
+                                <i class="fa fa-times me-1"></i> Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!--Modelo de obras-->
+        <div class="tab-pane fade" id="pane-modelo-obras">
+
+            <!---->
+            <h5>Modelos de Obra</h5>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="encabezado-azul">
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="modelo, iter : ${modelosObra}"
+                        th:data-id="${modelo.id_modelo_obra}"
+                        th:data-nombre="${modelo.nombre}"
+                        th:data-descripcion="${modelo.descripcion}"
+                        th:data-id_tipo_obra="${modelo.id_tipo_obra}"
+                        th:data-url_modelo="${modelo.url_modelo3d}"
+                        th:data-uso_destinado="${modelo.uso_destinado}"
+                        th:data-pisos="${modelo.pisos}"
+                        th:data-ambientes="${modelo.ambientes}"
+                        th:data-area_total="${modelo.area_total}"
+                        th:data-capacidad_personas="${modelo.capacidad_personas}"
+                        th:data-precio_preferencial="${modelo.precio_preferencial}"
+                        onclick="seleccionarModelo(this)">
+
+
+                        <td th:text="${iter.index + 1}">1</td>
+                        <td th:text="${modelo.nombre}">Modelo 1</td>
+                        <td th:text="${modelo.descripcion}">Descripción</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ========== FORMULARIO ========== -->
+            <div class="card card-edicion mt-3">
+                <div class="card-header">Editar Modelo de Obra</div>
+                <div class="card-body">
+                    <form id="form-modelo-obra" onsubmit="guardarModeloObra(event)">
+                        <input type="hidden" id="modeloId">
+
+                        <div class="row g-3">
+                            <div class="col-md-6 form-floating">
+                                <input class="form-control" id="modeloNombre" placeholder="Nombre" required>
+                                <label for="modeloNombre">Nombre</label>
+                            </div>
+
+                            <div class="col-md-6 form-floating">
+                                <select class="form-select" id="modeloTipoObra" required>
+                                    <option value="" disabled selected>Seleccione un tipo de obra</option>
+                                    <option th:each="tipo : ${tiposObra}"
+                                            th:if="${tipo.estado}"
+                                            th:value="${tipo.id_tipo_obra}"
+                                            th:text="${tipo.nombre}">
+                                    </option>
+                                </select>
+                                <label for="modeloTipoObra">Tipo de Obra</label>
+                            </div>
+
+                            <div class="col-md-12 form-floating">
+                                <input class="form-control" id="modeloDescripcion" placeholder="Descripción" required>
+                                <label for="modeloDescripcion">Descripción</label>
+                            </div>
+
+                            <div class="col-md-6 form-floating">
+                                <input class="form-control" id="modeloUsoDestinado" placeholder="Uso destinado">
+                                <label for="modeloUsoDestinado">Uso Destinado</label>
+                            </div>
+
+                            <div class="col-md-3 form-floating">
+                                <input type="number" min="0" class="form-control" id="modeloPisos" placeholder="Pisos">
+                                <label for="modeloPisos">Pisos</label>
+                            </div>
+
+                            <div class="col-md-3 form-floating">
+                                <input type="number" min="0" class="form-control" id="modeloAmbientes"
+                                       placeholder="Ambientes">
+                                <label for="modeloAmbientes">Ambientes</label>
+                            </div>
+
+                            <div class="col-md-4 form-floating">
+                                <input type="number" min="0" step="0.01" class="form-control" id="modeloAreaTotal"
+                                       placeholder="Área total (m²)">
+                                <label for="modeloAreaTotal">Área Total (m²)</label>
+                            </div>
+
+                            <div class="col-md-4 form-floating">
+                                <input type="number" min="0" class="form-control" id="modeloCapacidadPersonas"
+                                       placeholder="Capacidad personas">
+                                <label for="modeloCapacidadPersonas">Capacidad Personas</label>
+                            </div>
+
+                            <div class="col-md-4 form-floating">
+                                <input type="number" min="0" step="0.01" class="form-control"
+                                       id="modeloPrecioPreferencial" placeholder="Precio preferencial (S/.)">
+                                <label for="modeloPrecioPreferencial">Precio Preferencial (S/.)</label>
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <label class="form-label">Modelo 3D (.glb)</label>
+                                <input type="file" accept=".glb" class="form-control" id="modeloArchivo"
+                                       onchange="mostrarModeloGLB(event)">
+                            </div>
+
+                            <div class="col-md-12 mt-3">
+                                <model-viewer id="glbViewer"
+                                              style="width:100%;height:300px;border:1px solid #ddd;border-radius:8px;"
+                                              alt="Modelo 3D"
+                                              src=""
+                                              auto-rotate
+                                              camera-controls
+                                              exposure="1"
+                                              background-color="#f9f9f9">
+                                </model-viewer>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button class="btn btn-success btn-sm">
+                                <i class="fa-solid fa-save me-1"></i>Guardar
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="eliminarModelo()">
+                                <i class="fa-solid fa-trash me-1"></i>Eliminar
+                            </button>
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="limpiarFormularioModelo()">
+                                <i class="fa-solid fa-xmark me-1"></i>Cancelar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <!-- ========== TIPOS DE OBRA ========== -->
+            <!-- ALERTA DE MENSAJES -->
+            <div id="alerta-tipo-obra"></div>
+
+            <!-- ENCABEZADO Y BOTÓN NUEVO -->
+            <h5 class="fw-bold mt-5 d-flex justify-content-between align-items-center">
+                Tipos de Obra
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#tipoObraModal"
+                        onclick="limpiarFormularioTipoObra()">
+                    <i class="fa fa-plus"></i> Nuevo
+                </button>
+            </h5>
+
+            <!-- TABLA DE TIPOS DE OBRA -->
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="encabezado-azul">
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="tipo, iter : ${tiposObra}" th:if="${tipo.estado}"
+                        th:data-id="${tipo.id_tipo_obra}"
+                        th:data-nombre="${tipo.nombre}"
+                        th:data-descripcion="${tipo.descripcion}"
+                        th:data-estado="${tipo.estado}">
+                        <td th:text="${iter.index + 1}">1</td>
+                        <td th:text="${tipo.nombre}">Residencial</td>
+                        <td th:text="${tipo.descripcion}">Viviendas familiares</td>
+                        <td>
+                <span th:classappend="${tipo.estado} ? 'badge bg-success' : 'badge bg-secondary'"
+                      th:text="${tipo.estado} ? 'Activo' : 'Inactivo'">Activo</span>
+                        </td>
+                        <td>
+                            <!-- Botón Editar -->
+                            <button class="btn btn-warning btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#tipoObraModal"
+                                    onclick="seleccionarTipoObra(this.closest('tr'))">
+                                <i class="fa fa-edit"></i> Editar
+                            </button>
+
+                            <!-- Botón Eliminar -->
+                            <button class="btn btn-danger btn-sm"
+                                    onclick="seleccionarTipoObra(this.closest('tr')); eliminarTipoObra();">
+                                <i class="fa fa-trash"></i> Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- MODAL FORMULARIO TIPO DE OBRA -->
+            <div class="modal fade" id="tipoObraModal" tabindex="-1" aria-labelledby="tipoObraModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-md">
+                    <div class="modal-content shadow rounded-3">
+                        <div class="modal-header bg-primary text-white">
+                            <h5 id="tipoObraModalLabel" class="modal-title fw-bold">Formulario de Tipo de Obra</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <form id="form-tipo-obra" onsubmit="guardarTipoObra(event)">
+                            <div class="modal-body">
+                                <input type="hidden" id="tipoObraId">
+                                <input type="hidden" id="tipoObraEstado" value="true">
+
+                                <div class="mb-3">
+                                    <label class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="tipoObraNombre" placeholder="Nombre" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Descripción</label>
+                                    <input type="text" class="form-control" id="tipoObraDescripcion" placeholder="Descripción" required>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fa fa-save me-1"></i> Guardar
+                                </button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    <i class="fa fa-times me-1"></i> Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /row -->
+
+        <!-- Tipo De Construccion -->
+        <div class="tab-pane fade" id="pane-modelo-tipoConstruccion">
+            <!-- ALERTA -->
+            <div id="alerta-tipo-construccion"></div>
+
+            <!-- ENCABEZADO + BOTÓN NUEVO -->
+            <h5 class="fw-bold mt-5 d-flex justify-content-between align-items-center">
+                Tipos de Construcción
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#tipoConstruccionModal"
+                        onclick="limpiarFormularioTipoConstruccion()">
+                    <i class="fa fa-plus"></i> Nuevo
+                </button>
+            </h5>
+
+            <!-- TABLA -->
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="encabezado-azul">
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="tipo, iter : ${tiposConstruccion}" th:if="${tipo.estado}"
+                        th:data-id="${tipo.id_tipo_construccion}"
+                        th:data-nombre="${tipo.nombre}"
+                        th:data-descripcion="${tipo.descripcion}"
+                        th:data-estado="${tipo.estado}">
+                        <td th:text="${iter.index + 1}">1</td>
+                        <td th:text="${tipo.nombre}">Nombre</td>
+                        <td th:text="${tipo.descripcion}">Descripción</td>
+                        <td>
+                <span th:classappend="${tipo.estado} ? 'badge bg-success' : 'badge bg-secondary'"
+                      th:text="${tipo.estado} ? 'Activo' : 'Inactivo'">Activo</span>
+                        </td>
+                        <td>
+                            <button class="btn btn-warning btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#tipoConstruccionModal"
+                                    onclick="seleccionarTipoConstruccion(this.closest('tr'))">
+                                <i class="fa fa-edit"></i> Editar
+                            </button>
+
+                            <button class="btn btn-danger btn-sm"
+                                    onclick="seleccionarTipoConstruccion(this.closest('tr')); eliminarTipoConstruccion();">
+                                <i class="fa fa-trash"></i> Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- MODAL -->
+            <div class="modal fade" id="tipoConstruccionModal" tabindex="-1" aria-labelledby="tipoConstruccionModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-md">
+                    <div class="modal-content shadow rounded-3">
+                        <div class="modal-header bg-primary text-white">
+                            <h5 id="tipoConstruccionModalLabel" class="modal-title fw-bold">Formulario de Tipo de Construcción</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <form id="form-tipo-construccion" onsubmit="guardarTipoConstruccion(event)">
+                            <div class="modal-body">
+                                <input type="hidden" id="tipoConstruccionId">
+                                <input type="hidden" id="tipoConstruccionEstado" value="true">
+
+                                <div class="mb-3">
+                                    <label class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="tipoConstruccionNombre" placeholder="Nombre" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Descripción</label>
+                                    <input type="text" class="form-control" id="tipoConstruccionDescripcion" placeholder="Descripción" required>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fa fa-save me-1"></i> Guardar
+                                </button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    <i class="fa fa-times me-1"></i> Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+</div>
+
+<!-- Bootstrap JS (tabs, collapse, etc.) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- ========== LÓGICA DE SELECCIÓN Y EDICIÓN ========== -->
+<script th:src="@{/js/obra/obra.js}"></script>
+
+<script th:src="@{/js/terrenos/formaTerreno.js}"></script>
+<script th:src="@{/js/terrenos/tipoSuelo.js}"></script>
+<script th:src="@{/js/terrenos/terreno.js}"></script>
+<script th:src="@{/js/obra/tipos-obras.js}"></script>
+<script th:src="@{/js/obra/modelos-obras.js}"></script>
+<script th:src="@{/js/obra/tipo-construccion.js}"></script>
+<script th:src="@{/js/obra/cliente.js}"></script>
+<script th:src="@{/js/obra/financiamiento.js}"></script>
+
+<script type="module" src="https://unpkg.com/@google/model-viewer@latest/dist/model-viewer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+</body>
+</html>

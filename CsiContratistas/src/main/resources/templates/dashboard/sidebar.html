@@ -1,0 +1,83 @@
+<div id="sidebar" class="sidebar" th:fragment="sidebar">
+
+    <!-- Perfil del usuario -->
+    <div class="profile text-center py-3">
+        <i class="fa-solid fa-user-circle fa-2x mb-2"></i>
+        <h5 th:text="${usuarioActual}">Nombre del Usuario</h5>
+        <span th:text="${rolActual}" class="text-muted"></span>
+    </div>
+
+    <!-- Menú principal -->
+    <h6 class="section-title px-3 text-white">Menú Principal</h6>
+    <ul class="nav flex-column px-2">
+
+        <!-- Acceso común a todos los roles -->
+        <li class="nav-item mb-2">
+            <a class="nav-link d-flex align-items-center" th:href="@{/administrador/menu}">
+                <i class="fa-solid fa-people-group me-3"></i> Inicio
+            </a>
+        </li>
+
+        <!-- Gestión de Obras - ADMINISTRADOR y CONTADOR -->
+        <li class="nav-item mb-2" th:if="${rolActual == 'administrador' or rolActual == 'contador'}">
+            <a class="nav-link d-flex align-items-center" th:href="@{/administrador/menu/obras}">
+                <i class="fa-solid fa-building me-3"></i> Gestión de Obras
+            </a>
+        </li>
+
+        <!-- Gestión de Materiales - ADMINISTRADOR y CONTADOR -->
+        <li class="nav-item mb-2" th:if="${rolActual == 'administrador' or rolActual == 'contador'}">
+            <a class="nav-link d-flex align-items-center" th:href="@{/administrador/materiales}">
+                <i class="fa-solid fa-boxes-stacked me-3"></i> Gestión de Materiales
+            </a>
+        </li>
+
+        <!-- Gestión de Empleados - ADMINISTRADOR y CONTADOR -->
+        <li class="nav-item mb-2" th:if="${rolActual == 'administrador' or rolActual == 'contador'}">
+            <a class="nav-link d-flex align-items-center" th:href="@{/administrador/empleados}">
+                <i class="fa-solid fa-users-viewfinder me-3"></i> Gestión de Empleados
+            </a>
+        </li>
+
+        <!-- Gestión de Usuarios y Roles - SOLO ADMINISTRADOR -->
+        <li class="nav-item mb-2" th:if="${rolActual == 'administrador'}">
+            <a class="nav-link d-flex align-items-center" data-bs-toggle="collapse" href="#submenuUsuarios" role="button" aria-expanded="false" aria-controls="submenuUsuarios">
+                <i class="fa-solid fa-user-gear me-3"></i> Gestión de Usuarios
+                <i class="fa-solid fa-chevron-down ms-auto"></i>
+            </a>
+            <div class="collapse ps-4" id="submenuUsuarios">
+                <a class="nav-link" th:href="@{/administrador/usuarios}">Usuarios</a>
+                <a class="nav-link" th:href="@{/administrador/roles}">Roles</a>
+            </div>
+        </li>
+
+        <!-- Gestor de Base de Datos - ADMINISTRADOR y DESARROLLADOR -->
+        <li class="nav-item mb-2" th:if="${rolActual == 'administrador' or rolActual == 'desarrollador'}">
+            <a class="nav-link d-flex align-items-center" th:href="@{/administrador/gestion-bd}">
+                <i class="fa-solid fa-database me-3"></i> Gestor de BD
+            </a>
+        </li>
+
+        <!-- Gestor del sistema funcional - ADMINISTRADOR y DESARROLLADOR -->
+        <li class="nav-item mb-2" th:if="${rolActual == 'administrador' or rolActual == 'desarrollador'}">
+            <a class="nav-link d-flex align-items-center" th:href="@{/administrador/gestion-bd/documentacion-api}">
+                <i class="fa-solid fa-code me-3"></i> Gestor del sistema funcional
+            </a>
+        </li>
+
+        <!-- Aviso para contador (sin acceso a lo técnico) -->
+        <li class="nav-item mb-2" th:if="${rolActual == 'contador'}">
+            <span class="nav-link disabled text-muted">Opciones avanzadas no disponibles</span>
+        </li>
+
+    </ul>
+
+    <!-- Cierre de sesión -->
+    <div class="logout mt-auto px-3 py-4">
+        <a class="nav-link d-flex align-items-center text-white bg-danger rounded p-2 justify-content-center" href="#" onclick="logout()">
+            <i class="fa-solid fa-right-from-bracket me-2"></i> Cerrar Sesión
+        </a>
+    </div>
+
+    <script th:src="@{/js/login/logout.js}"></script>
+</div>

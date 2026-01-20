@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSI Contratistas - Construcción y Desarrollo</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/landingpage.css">
+</head>
+<body>
+    <!-- Header -->
+    <header id="header" class="header">
+        <div class="header__container">
+            <div class="header__logo">
+                <img src="/img/LandingPage/LogoPrincipal.png" alt="Logo de la empresa" width="64" height="64">
+                <div class="header__logo-text">
+                    <h1>CSI</h1>
+                    <h2>Contratistas</h2>
+                </div>
+            </div>
+
+            <div class="header__right">
+                <!-- Navegación normal para desktop -->
+                <nav class="header__nav">
+                    <a href="#sobre-nosotros">Sobre nosotros</a>
+                    <a href="#servicios">Servicios</a>
+                    <a href="galeria">Galería</a>
+                </nav>
+
+                <a href="https://wa.me/51968611911" target="_blank" class="contact-button">Contactar</a>
+
+                <!-- Botón de menú hamburguesa -->
+                <div class="menu-hamburger" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+            <!-- Menú móvil cuando está abierto -->
+            <div class="mobile-menu" id="mobileMenu">
+                <a href="#sobre-nosotros">Sobre nosotros</a>
+                <a href="#servicios">Servicios</a>
+                <a href="galeria.html">Galería</a>
+                <a href="https://wa.me/51968611911" target="_blank" class="contact-button">Contactar</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Video Section -->
+        <section class="video-section">
+            <video
+                src="https://res.cloudinary.com/dvp4kikxg/video/upload/v1746225091/nzxqgozbelbnjgqahxnh.mp4"
+                autoplay
+                loop
+                muted
+                playsinline
+                class="background-video"
+            ></video>
+            <div class="video-overlay">
+                <h1>Bienvenido a CSI Contratistas</h1>
+                <p>Construyendo tus sueños con solidez y confianza.</p>
+            </div>
+        </section>
+
+        <!-- Sobre Nosotros Section -->
+        <section id="sobre-nosotros" class="about-section">
+            <div class="about-container">
+                <h2>Sobre Nosotros</h2>
+                <div class="mission-vision-container">
+                    <div class="mission-card">
+                        <h3>Misión</h3>
+                        <p>
+                            Nuestra misión es ofrecer servicios de construcción y contratación de alta calidad,
+                            superando las expectativas de nuestros clientes a través de la innovación,
+                            la eficiencia y el compromiso con la excelencia en cada proyecto.
+                        </p>
+                    </div>
+                    <div class="vision-card">
+                        <h3>Visión</h3>
+                        <p>
+                            Ser líderes reconocidos en el sector de la construcción, destacando por nuestra
+                            integridad, profesionalismo y contribución al desarrollo sostenible, construyendo
+                            relaciones duraderas basadas en la confianza y el respeto mutuo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="servicios" class="services-section">
+            <div class="services-container">
+                <h2>Nuestros Servicios</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <h3>Autogestión de Proyectos</h3>
+                        <img src="/img/LandingPage/AutogestionDeProyectos.png" alt="Autogestión de proyectos" width="200" height="150">
+                        <p>Gestión integral de proyectos desde la planificación hasta la entrega.</p>
+                    </div>
+                    <div class="service-card">
+                        <h3>Planificación de Presupuesto</h3>
+                        <img src="/img/LandingPage/PlanificaciondePresupuesto.png" alt="Planificacion de Presupuesto" width="200" height="150">
+                        <p>Elaboración de presupuestos detallados y ajustados a tus necesidades.</p>
+                    </div>
+                    <div class="service-card">
+                        <h3>Diseño y Arquitectura</h3>
+                        <img src="/img/LandingPage/DisenoyArquitectura.png" alt="Diseño y Arquitectura" width="200" height="150">
+                        <p>Soluciones creativas y funcionales para tus proyectos arquitectónicos.</p>
+                    </div>
+                    <div class="service-card">
+                        <h3>Supervisión y Ejecución de Obras</h3>
+                        <img src="/img/LandingPage/EjecucionySupervisiondeObras.png" alt="Ejecucion y Supervision de Obras" width="200" height="150">
+                        <p>Supervisión rigurosa y ejecución eficiente para garantizar la calidad.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section id="porque-elegirnos" class="why-choose-us-section">
+            <div class="why-choose-us-container">
+                <h2>¿Por qué elegirnos?</h2>
+                <div class="benefits-grid">
+                    <div class="benefits-central">
+                        <h3>Beneficios de <br/>contratar <br/><span class="highlight-text">CSI</span></h3>
+                    </div>
+
+                    <div class="benefit-card speed-card">
+                        <div class="benefit-icon">
+                            <span class="benefit-highlight" data-counter="3">3</span>x
+                        </div>
+                        <p>Velocidad del proyecto</p>
+                    </div>
+
+                    <div class="benefit-card support-card">
+                        <div class="benefit-icon">
+                            <img src="/img/LandingPage/PorqueElegirnos/Suitcase.png" alt="Atención Personalizada" width="60" height="60">
+                        </div>
+                        <p>Atención Personalizada<br/>Soporte y Asesoría</p>
+                    </div>
+
+                    <div class="benefit-card projects-card">
+                        <div class="benefit-icon">
+                            <span class="benefit-prefix">Más de</span>
+                            <span class="benefit-highlight" data-counter="10">10</span>
+                        </div>
+                        <p>Proyectos Ejecutados</p>
+                    </div>
+
+                    <div class="benefit-card quality-card">
+                        <div class="benefit-icon">
+                            <img src="/img/LandingPage/PorqueElegirnos/ModernHouse.png" alt="Calidad de Construcción" width="60" height="60">
+                        </div>
+                        <p>Calidad de Construcción<br/>Garantizada</p>
+                    </div>
+
+                    <div class="benefit-card experience-card">
+                        <div class="benefit-icon">
+                            <img src="/img/LandingPage/PorqueElegirnos/EngieneerHelmet.png" alt="Alta Experiencia" width="60" height="60">
+                        </div>
+                        <p>Alta Experiencia</p>
+                    </div>
+
+                    <div class="benefit-card satisfaction-card">
+                        <div class="benefit-icon">
+                            <span class="benefit-highlight" data-counter="87">87%</span>
+                        </div>
+                        <p>Clientes<br/>Satisfechos</p>
+                    </div>
+
+                    <div class="benefit-card services-card">
+                        <div class="benefit-services">
+                            <p>Arquitectura + Ingienería + Mano de Obra</p>
+                            <div class="service-icons">
+                                <img src="/img/LandingPage/PorqueElegirnos/Plan.png" alt="Arquitectura" width="50" height="50">
+                                <img src="/img/LandingPage/PorqueElegirnos/Building.png" alt="Ingeniería" width="50" height="50">
+                                <img src="/img/LandingPage/PorqueElegirnos/Materials.png" alt="Mano de Obra" width="50" height="50">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="benefit-card budget-card">
+                        <div class="budget-bar">
+                            <div class="budget-progress" data-progress="33"></div>
+                        </div>
+                        <p>Reduce el presupuesto a 1/3<br/>Con la misma calidad...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="galeria" class="gallery-section">
+            <div class="gallery-container">
+                <h2>Galería</h2>
+                
+                <div class="gallery-main-image" id="galleryMainImage">
+                    <img src="/img/LandingPage/GaleriadeImagenes/484916015_1206753598119236_1185312524214688440_n.jpg" 
+                         alt="Imagen principal" 
+                         class="main-gallery-image" 
+                         width="800" 
+                         height="500">
+                </div>
+
+                <div class="gallery-thumbnails" id="galleryThumbnails">
+                    <!-- Thumbnails will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Modal -->
+        <div class="gallery-modal" id="galleryModal" style="display: none;">
+            <div class="modal-overlay"></div>
+            <div class="modal-content">
+                <button class="modal-close" id="galleryModalClose">&times;</button>
+                
+                <div class="modal-navigation">
+                    <button class="nav-button prev" id="galleryModalPrev">&#10094;</button>
+                    
+                    <div class="modal-image-container">
+                        <img src="" alt="" class="modal-image" id="galleryModalImage" width="1200" height="800">
+                    </div>
+                    
+                    <button class="nav-button next" id="galleryModalNext">&#10095;</button>
+                </div>
+                
+                <div class="modal-thumbnails" id="galleryModalThumbnails">
+                    <!-- Modal thumbnails will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Price Calculator Section -->
+        <section id="calculadora" class="calculator-section">
+            <div class="calculator-container">
+                <h2>Calculadora de Precio Estimado</h2>
+                <p class="calculator-subtitle">Obtén un estimado del costo de tu proyecto de construcción</p>
+                
+                <div class="calculator-form">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="location">Ubicación del Proyecto</label>
+                                <select class="form-select" id="location">
+                                    <option value="" selected disabled>Selecciona un distrito</option>
+                                    <option value="chiclayo">Chiclayo</option>
+                                    <option value="jose_leonardo">José Leonardo Ortiz</option>
+                                    <option value="la_victoria">La Victoria</option>
+                                    <option value="pimentel">Pimentel</option>
+                                    <option value="picsi">Picsi</option>
+                                    <option value="pomalca">Pomalca</option>
+                                    <option value="pucala">Pucalá</option>
+                                    <option value="ferrenafe">Ferreñafe</option>
+                                    <option value="motupe">Motupe</option>
+                                    <option value="olmos">Olmos</option>
+                                    <option value="jayanca">Jayanca</option>
+                                    <option value="tucume">Túcume</option>
+                                    <option value="mochumi">Mochumí</option>
+                                    <option value="monsefu">Monsefú</option>
+                                    <option value="etenguene">Eten</option>
+                                    <option value="reque">Reque</option>
+                                    <option value="lagunas">Lagunas</option>
+                                    <option value="chongoyape">Chongoyape</option>
+                                    <option value="illimo">Íllimo</option>
+                                    <option value="pueblo_nuevo">Pueblo Nuevo</option>
+                                    <option value="tuman">Tumán</option>
+                                    <option value="chochope">Chochope</option>
+                                    <option value="juanito">Juanito</option>
+                                    <option value="mochumi_viejo">Mochumí Viejo</option>
+                                    <option value="naylamp">Naylamp</option>
+                                    <option value="otro">Otra ubicación</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="construction-type">Tipo de Construcción</label>
+                                <select class="form-select" id="construction-type">
+                                    <option value="" selected disabled>Selecciona un tipo</option>
+                                    <option value="casa">Casa</option>
+                                    <option value="departamento">Departamento</option>
+                                    <option value="oficina">Oficina</option>
+                                    <option value="local">Local Comercial</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="area">Área Total (m²)</label>
+                                <input type="number" class="form-control" id="area" placeholder="Ej: 120" min="1">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="quality">Calidad de Construcción</label>
+                                <select class="form-select" id="quality">
+                                    <option value="economica">Económica</option>
+                                    <option value="media" selected>Media</option>
+                                    <option value="alta">Alta Gama</option>
+                                    <option value="premium">Premium</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="includes-materials" checked>
+                                <label class="form-check-label" for="includes-materials">
+                                    Incluir materiales en el cálculo
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 text-center mt-4">
+                            <button type="button" class="btn btn-primary btn-lg" id="calculate-btn">Calcular Presupuesto</button>
+                        </div>
+                    </div>
+                    
+                    <div class="result-container mt-5" id="result-container" style="display: none;">
+                        <div class="result-card">
+                            <h3>Estimado del Proyecto</h3>
+                            <div class="result-details">
+                                <div class="result-item">
+                                    <span>Costo por m²:</span>
+                                    <div class="currency-container">
+                                        <span id="cost-per-meter-pen" class="currency-pen">S/. 0.00</span>
+                                        <span id="cost-per-meter-usd" class="currency-usd">($0.00 USD)</span>
+                                    </div>
+                                </div>
+                                <div class="result-item total">
+                                    <span>Total Estimado:</span>
+                                    <div class="currency-container">
+                                        <span id="total-estimate-pen" class="currency-pen">S/. 0.00</span>
+                                        <span id="total-estimate-usd" class="currency-usd">($0.00 USD)</span>
+                                    </div>
+                                </div>
+                                <div class="exchange-rate">
+                                    <small>Tipo de cambio: 1 USD = <span id="exchange-rate">3.80</span> PEN</small>
+                                </div>
+                            </div>
+                            <p class="disclaimer">* Este es un cálculo estimado. Para un presupuesto exacto, contáctanos para una evaluación personalizada.</p>
+                            <button class="btn btn-outline-primary mt-3" id="contact-btn">Solicitar Cotización</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contacto" class="contact-section">
+            <div class="contact-container">
+                <h1 class="contact-title">Horario de Atención</h1>
+
+                <div class="schedule-container">
+                    <div class="schedule-icon">
+                        <img src="/img/LandingPage/OtherIcons/calendar.png" alt="Calendar Icon" width="42" height="42">
+                    </div>
+                    <div class="schedule-text">
+                        Lunes a Viernes 9:00 A 18:00
+                    </div>
+                </div>
+
+                <h2 class="contact-subtitle">¿Quieres Comunicarte con Nosotros?</h2>
+
+                <div class="chevron-container">
+                    <svg width="40" height="20" viewBox="0 0 40 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 0L20 20L40 0" stroke="#0066cc" stroke-width="3"/>
+                    </svg>
+                    <svg width="40" height="20" viewBox="0 0 40 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 0L20 20L40 0" stroke="#0066cc" stroke-width="3"/>
+                    </svg>
+                </div>
+
+                <button class="contact-button2">
+                    → Contactar
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <!-- Logo section -->
+        <div class="footer-left">
+            <div class="logo">
+                <img src="/img/LandingPage/LogoPrincipal.png" alt="Logo" width="100" height="80">
+            </div>
+
+            <div class="book-container">
+                <div class="book-icon">
+                    <i class="bi bi-book" style="font-size: 3.5rem;"></i>
+                </div>
+                <div class="book-text">
+                    Libro de<br/>
+                    Reclamaciones
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact section -->
+        <div class="footer-center">
+            <h3>Contactanos</h3>
+
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="bi bi-envelope-fill"></i>
+                </div>
+                <a href="mailto:correo@gmail.com">correo@gmail.com</a>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="bi bi-telephone-fill"></i>
+                </div>
+                <a href="tel:3899832109">3899832109</a>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="bi bi-geo-alt-fill"></i>
+                </div>
+                <span>Urbanicacion los Sauces C29</span>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="bi bi-building-fill"></i>
+                </div>
+                <span>CSI Contratistas Reservado</span>
+            </div>
+        </div>
+
+        <!-- Social section -->
+        <div class="footer-right">
+            <h3>Redes</h3>
+            <div class="social-icon">
+                <i class="bi bi-facebook"></i>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="whatsapp-float">
+        <a href="https://wa.me/51915161463?text=Hola%20soy%20un%20cliente%20interesado%20me%20puede%20dar%20mas%20informacion" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           class="whatsapp-btn"
+           title="Contáctanos por WhatsApp">
+            <i class="bi bi-whatsapp"></i>
+        </a>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="/js/landingpage/header.js"></script>
+    <script src="/js/landingpage/main.js"></script>
+    <script src="/js/landingpage/calculator.js"></script>
+</body>
+</html>

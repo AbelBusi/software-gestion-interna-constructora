@@ -1,0 +1,102 @@
+<div class="modal fade" id="modalNuevoUsuario" tabindex="-1" aria-hidden="true" th:fragment="nuevoUsuario">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form th:action="@{/administrador/usuarios/guardar}" method="post" id="formNuevoUsuario">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fas fa-user-plus me-2"></i>Nuevo Usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="id_empleado" class="form-label">Empleado</label>
+            <select class="form-control select2-empleados" id="id_empleado" name="id_empleado" required>
+              <option value="">Seleccione un empleado</option>
+              <option th:each="empleado : ${empleadosDisponibles}"
+                      th:value="${empleado.id_empleado}"
+                      th:text="${empleado.nombre + ' ' + empleado.apellidos + ' - DNI: ' + empleado.dni}">
+              </option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="correo" class="form-label">Email</label>
+            <input type="email" class="form-control" id="correo" name="correo" required>
+          </div>
+          <div class="mb-4">
+            <label for="clave_acceso" class="form-label fw-semibold">
+              <i class="fas fa-lock me-2 text-primary"></i>Contraseña
+            </label>
+            <div class="input-group password-input-group">
+              <input type="password" class="form-control password-field" id="clave_acceso"
+                     name="clave_acceso" required minlength="6" 
+                     placeholder="Ingresa tu contraseña">
+              <button class="btn btn-outline-primary password-toggle" type="button" id="togglePassword">
+                <i class="fas fa-eye" id="eyeIcon"></i>
+              </button>
+            </div>
+
+            <div class="password-strength mt-3">
+              <div class="strength-bar">
+                <div class="strength-fill" id="strengthFill"></div>
+              </div>
+              <div class="strength-text" id="strengthText">Ingresa una contraseña</div>
+            </div>
+
+            <div class="password-validation-grid mt-3" id="passwordValidation">
+              <div class="validation-item" id="lengthCheck">
+                <div class="validation-icon">
+                  <i class="fas fa-circle"></i>
+                </div>
+                <span class="validation-text">Mínimo 6 caracteres</span>
+              </div>
+              <div class="validation-item" id="uppercaseCheck">
+                <div class="validation-icon">
+                  <i class="fas fa-circle"></i>
+                </div>
+                <span class="validation-text">Al menos 1 mayúscula</span>
+              </div>
+              <div class="validation-item" id="lowercaseCheck">
+                <div class="validation-icon">
+                  <i class="fas fa-circle"></i>
+                </div>
+                <span class="validation-text">Al menos 1 minúscula</span>
+              </div>
+              <div class="validation-item" id="numberCheck">
+                <div class="validation-icon">
+                  <i class="fas fa-circle"></i>
+                </div>
+                <span class="validation-text">Al menos 1 número</span>
+              </div>
+              <div class="validation-item" id="specialCheck">
+                <div class="validation-icon">
+                  <i class="fas fa-circle"></i>
+                </div>
+                <span class="validation-text">Al menos 1 carácter especial</span>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="id_rol" class="form-label">Rol</label>
+            <select class="form-control" id="id_rol" name="id_rol" required>
+              <option value="">Seleccione un rol</option>
+              <option th:each="rol : ${roles}" th:value="${rol.id_rol}"
+                      th:text="${rol.nombre}"></option>
+            </select>
+          </div>
+          <input type="hidden" id="estado" name="estado" value="true">
+          <div class="alert alert-info alert-sm" role="alert">
+            <i class="fas fa-info-circle me-1"></i>
+            <small>Los nuevos usuarios se crean automáticamente con estado "Activo"</small>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <i class="fas fa-times me-1"></i> Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save me-1"></i> Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

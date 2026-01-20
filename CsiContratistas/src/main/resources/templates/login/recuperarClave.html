@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600&display=swap" rel="stylesheet">
+
+  <title>Recuperar Contraseña | CSI CONTRATISTAS</title>
+  <link rel="icon" th:href="@{/img/logo.png}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/recuperarClave.css}">
+
+
+</head>
+<body>
+<div class="container-fluid login-wrapper d-flex p-0">
+  <div class="row flex-grow-1 g-0 w-100">
+    <!-- Columna izquierda -->
+    <div class="col-12 col-md-6 login-left d-flex flex-column justify-content-center align-items-center">
+      <img th:src="@{/img/logo.png}" alt="Logo CSI" class="mb-4" style="max-width:140px;">
+      <h1>CSI CONTRATISTAS</h1>
+      <p>Construyendo confianza, edificando el futuro</p>
+    </div>
+
+    <!-- Columna derecha -->
+    <div class="col-12 col-md-6 login-right d-flex align-items-center justify-content-center">
+      <div class="form-box w-100">
+        <h3 class="text-center mb-4">Recuperar Contraseña</h3>
+        <div id="alertContainer" class="mb-3"></div>
+
+        <form id="recoveryForm" novalidate>
+          <!-- PASO 1 -->
+          <div id="step-1" class="step">
+            <div class="mb-3 position-relative">
+              <input type="text" id="dni" class="form-control with-icon" placeholder="DNI (8 dígitos)" required pattern="\d{8}" maxlength="8">
+              <i class="fa-solid fa-id-card field-icon"></i>
+            </div>
+            <div class="mb-3 position-relative">
+              <input type="email" id="emailUsuario" class="form-control with-icon" placeholder="Correo registrado" required>
+              <i class="fa-solid fa-envelope field-icon"></i>
+            </div>
+            <button type="button" class="btn btn-primary w-100" onclick="nextStep(1)">Siguiente</button>
+          </div>
+
+          <!-- PASO 2 -->
+          <div id="step-2" class="step d-none">
+            <div class="mb-3 position-relative">
+              <input type="email" id="emailVerificacion" class="form-control with-icon" placeholder="Correo para verificación" required>
+              <i class="fa-solid fa-paper-plane field-icon"></i>
+            </div>
+            <button type="button" class="btn btn-primary w-100" onclick="nextStep(2)">Enviar código</button>
+          </div>
+
+          <!-- PASO 3 -->
+          <div id="step-3" class="step d-none">
+            <div class="mb-3 position-relative">
+              <input type="text" id="codigo" class="form-control with-icon" placeholder="Código de verificación (6 dígitos)" required pattern="\d{6}" maxlength="6">
+              <i class="fa-solid fa-shield-halved field-icon"></i>
+            </div>
+            <button type="button" class="btn btn-primary w-100" onclick="nextStep(3)">Validar código</button>
+          </div>
+
+          <!-- PASO 4 -->
+          <div id="step-4" class="step d-none">
+            <div class="mb-3 position-relative">
+              <input type="password" id="newPass" class="form-control with-icon" placeholder="Nueva contraseña (mín. 6)" required minlength="6" oninput="validarContraseña()">
+              <i class="fa-solid fa-lock field-icon"></i>
+              <div id="passwordHelp" class="form-text mt-1"></div>
+            </div>
+            <div class="mb-3 position-relative">
+              <input type="password" id="confirmPass" class="form-control with-icon" placeholder="Confirmar contraseña" required>
+              <i class="fa-solid fa-lock field-icon"></i>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Guardar nueva contraseña</button>
+          </div>
+        </form>
+
+        <div class="text-center mt-3"><a th:href="@{/administrador/ingresar}" class="small">Volver al inicio de sesión</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/login/recuperarClave.js}"></script>
+<script>
+function validarContraseña() {
+  const input = document.getElementById("newPass");
+  const mensaje = document.getElementById("passwordHelp");
+  const valor = input.value;
+
+  if (valor.length === 0) {
+    mensaje.textContent = "";
+    input.classList.remove("is-invalid", "is-valid");
+    return;
+  }
+
+  if (valor.length < 6) {
+    mensaje.textContent = "Contraseña débil: mínimo 6 caracteres";
+    mensaje.classList.add("text-danger");
+    mensaje.classList.remove("text-success");
+    input.classList.add("is-invalid");
+    input.classList.remove("is-valid");
+  } else {
+    mensaje.textContent = "Contraseña segura";
+    mensaje.classList.add("text-success");
+    mensaje.classList.remove("text-danger");
+    input.classList.add("is-valid");
+    input.classList.remove("is-invalid");
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+.gallery-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+  }
+  
+  .house-card.horizontal {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    background-color: #ffffff20;
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    position: relative;
+    isolation: isolate;
+  }
+
+  .house-card.horizontal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(10px) brightness(0.7);
+    z-index: -1;
+    opacity: 0.7;
+  }
+  
+  .house-card.horizontal:nth-child(1)::before {
+    background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914');
+  }
+  
+  .house-card.horizontal:nth-child(2)::before {
+    background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c');
+  }
+  
+  .house-card.horizontal:nth-child(3)::before {
+    background-image: url('https://images.unsplash.com/photo-1560185127-6ed189bf02f4');
+  }
+  
+  .main-image-horizontal {
+    width: 45%;
+    object-fit: cover;
+    cursor: pointer;
+  }
+  
+  .info-box-horizontal {
+    width: 55%;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .info-box-horizontal .desc {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+  }
+  
+  .image-stack {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    color: #fff;
+    z-index: 2;
+  }
+  
+  .status {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    border-radius: 12px;
+    backdrop-filter: blur(6px);
+    font-weight: bold;
+    color: #fff;
+    font-size: 0.85rem;
+    z-index: 2;
+  }
+  
+  .status-completed {
+    background-color: rgba(40, 167, 69, 0.6);
+  }
+  .status-inprogress {
+    background-color: rgba(255, 193, 7, 0.6);
+  }
+  .status-planned {
+    background-color: rgba(220, 53, 69, 0.6);
+  }
+  
+  .features {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+  }
+  .features li {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .btn {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn.model {
+    background-color: #0d6efd;
+  }
+  .btn.model:hover {
+    background-color: #0b5ed7;
+  }
+  
+  .btn.whatsapp {
+    background-color: #25d366;
+  }
+  .btn.whatsapp:hover {
+    background-color: #1da851;
+  }
+  

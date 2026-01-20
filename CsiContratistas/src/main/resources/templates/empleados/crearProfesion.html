@@ -1,0 +1,44 @@
+<div th:fragment="modalNuevoProfesion">
+    <div class="modal fade" id="modalNuevaProfesion" tabindex="-1" aria-labelledby="modalNuevaProfesionLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalNuevaProfesionLabel">Nueva Profesión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <form th:action="@{/administrador/profesiones/guardar}" method="post">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="nuevoNombreProfesion" class="form-label">Nombre de la Profesión</label>
+                            <input type="text" class="form-control" name="nombre" id="nuevoNombreProfesion"
+                                   required pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+"
+                                   title="Solo se permiten letras y espacios."
+                                   oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');">
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="nuevoDescripcionProfesion" class="form-label">Descripción</label>
+                            <textarea class="form-control" name="descripcion" id="nuevoDescripcionProfesion" rows="3"
+                                      pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ0-9.,\s-]*"
+                                      title="Solo se permiten letras, números, espacios y signos básicos (.,-)."
+                                      oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9.,\s-]/g, '');"></textarea>
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <input type="hidden" name="estado" value="true">
+                        <p class="text-muted"><small>Estado: **Activo** (por defecto)</small></p>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

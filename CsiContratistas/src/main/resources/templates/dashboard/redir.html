@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirigiendo...</title>
+</head>
+<body>
+<script>
+    const token = localStorage.getItem('token');
+    if (token) {
+      window.location.href = '/administrador/menu';
+    } else {
+      window.location.href = '/administrador/ingresar';
+    }
+  </script>
+</body>
+</html>
