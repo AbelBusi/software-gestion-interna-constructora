@@ -1,0 +1,141 @@
+<div class="card shadow-sm mt-4" th:fragment="tarjetaEmpleados">
+    <div class="card-body">
+
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 pb-2 border-bottom">
+            <h2 class="mb-0 fw-semibold text-dark">Lista de Empleados</h2>
+            <button class="btn btn-primary d-flex align-items-center gap-1" data-bs-toggle="modal"
+                    data-bs-target="#modalNuevoEmpleado">
+                <i class="fas fa-plus"></i><span>Nuevo Empleado</span>
+            </button>
+        </div>
+
+        <div class="mb-3">
+            <div class="row g-2 align-items-center">
+                <div class="col-md-4 col-sm-6">
+                    <label for="searchEmpleado"></label><input type="text" class="form-control" id="searchEmpleado" placeholder="Buscar por DNI o Nombre...">
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <label for="filterEstado"></label><select class="form-select" id="filterEstado">
+                        <option value="">Filtrar por Estado</option>
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                        <option value="Vacaciones">Vacaciones</option>
+                        <option value="Licencia">Licencia</option>
+                    </select>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <label for="filterProfesion"></label><select class="form-select" id="filterProfesion">
+                        <option value="">Filtrar por Profesión</option>
+                        <option th:each="prof : ${profesiones}"
+                                th:value="${prof.nombre}"
+                                th:text="${prof.nombre}">
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-2 col-sm-6">
+                    <button class="btn btn-outline-secondary w-100" id="clearFilters">Limpiar Filtros</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle" id="empleadosTable">
+                <thead class="encabezado-azul">
+                <tr>
+                    <th>ID</th>
+                    <th>DNI</th>
+                    <th>Nombre Completo</th>
+                    <th>Fecha Nac.</th>
+                    <th>Género</th>
+                    <th>Teléfono</th>
+                    <th>Estado Civil</th>
+                    <th>Dirección</th>
+                    <th>Profesión</th>
+                    <th>Rama</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="empleado : ${empleados}">
+                    <td th:text="${empleado.id_empleado}"></td>
+                    <td th:text="${empleado.dni}"></td>
+                    <td>
+                        <span th:text="${empleado.nombre}"></span>
+                        <span th:text="${empleado.apellidos}"></span>
+                    </td>
+                    <td th:text="${#temporals.format(empleado.fecha_nacimiento, 'dd-MM-yyyy')}"></td> <td th:text="${empleado.genero}"></td>
+                    <td th:text="${empleado.telefono}"></td>
+                    <td th:text="${empleado.estado_civil}"></td>
+                    <td th:text="${empleado.direccion}"></td>
+                    <td th:text="${empleado.profesionNombre}"></td>
+                    <td th:text="${empleado.ramaNombre}"></td>
+                    <td>
+                            <span th:classappend="${empleado.estado == 'Activo' ? 'badge bg-success' :
+                                                    (empleado.estado == 'Inactivo' ? 'badge bg-danger' :
+                                                    (empleado.estado == 'Vacaciones' ? 'badge bg-info' :
+                                                    (empleado.estado == 'Licencia' ? 'badge bg-warning text-dark' : 'badge bg-secondary')))}"
+                                  th:text="${empleado.estado}">
+                            </span>
+                    </td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-warning btn-accion-empleado btn-editar-empleado"
+                                    data-bs-toggle="modal" data-bs-target="#modalEditarEmpleado"
+                                    th:attr="
+                                        data-id_empleado=${empleado.id_empleado},
+                                        data-dni=${empleado.dni},
+                                        data-nombre=${empleado.nombre},
+                                        data-apellidos=${empleado.apellidos},
+                                        data-fecha_nacimiento=${empleado.fecha_nacimiento},
+                                        data-genero=${empleado.genero},
+                                        data-telefono=${empleado.telefono},
+                                        data-estado_civil=${empleado.estado_civil},
+                                        data-direccion=${empleado.direccion},
+                                        data-estado=${empleado.estado},
+                                        data-id_profesion=${empleado.profesionId},
+                                        data-id_rama=${empleado.ramaId},
+                                        data-id_cargo=${empleado.cargoId}
+                                    ">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button class="btn btn-sm btn-danger btn-accion-empleado btn-eliminar-empleado"
+                                    th:attr="data-id_empleado=${empleado.id_empleado}">
+                                <i class="fas fa-trash-alt"></i> Eliminar
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(empleados)}">
+                    <td colspan="12" class="text-center text-muted">No hay empleados registrados.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${empleadosPage.first} ? 'disabled'">
+                    <a class="page-link" th:href="@{|/administrador/empleados?page=${empleadosPage.number - 1}|}">Anterior</a>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, empleadosPage.totalPages - 1)}"
+                    th:classappend="${empleadosPage.number == i} ? 'active'">
+                    <a class="page-link" th:href="@{|/administrador/empleados?page=${i}|}" th:text="${i + 1}">1</a>
+                </li>
+                <li class="page-item" th:classappend="${empleadosPage.last} ? 'disabled'">
+                    <a class="page-link" th:href="@{|/administrador/empleados?page=${empleadosPage.number + 1}|}">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <button id="downloadPdfBtn" class="btn btn-danger d-flex align-items-center gap-1">
+                <i class="fas fa-file-pdf"></i><span>Descargar PDF</span>
+            </button>
+            <button id="downloadXlsBtn" class="btn btn-success d-flex align-items-center gap-1">
+                <i class="fas fa-file-excel"></i><span>Descargar XLS</span>
+            </button>
+        </div>
+
+    </div>
+</div>

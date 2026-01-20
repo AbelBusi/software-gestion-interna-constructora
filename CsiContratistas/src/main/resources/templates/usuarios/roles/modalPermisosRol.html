@@ -1,0 +1,35 @@
+<div class="modal fade" id="modalPermisosRol" tabindex="-1" aria-hidden="true" th:fragment="modalPermisosRol">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="formPermisosRol" method="post" th:action="@{roles/asignar-permisos}">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-key me-2"></i>Gestionar Permisos de <span id="nombreRolPermiso"></span>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="idRolPermiso" name="id_rol">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="list-group" id="listaPermisos">
+                                <div th:each="permiso : ${permisos}">
+                                    <label class="list-group-item">
+                                        <input class="form-check-input me-1" type="checkbox" th:name="permisos"
+                                            th:value="${permiso.id_permiso}">
+                                        <span th:text="${permiso.nombre}"></span>
+                                        <small class="text-muted" th:text="${permiso.descripcion}"></small>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Permisos</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+<div th:fragment="modalEditarEmpleado">
+  <div class="modal fade" id="modalEditarEmpleado" tabindex="-1" aria-labelledby="modalEditarEmpleadoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form th:action="@{empleados/editar}" method="post">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalEditarEmpleadoLabel">Editar Empleado</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="id_empleado" id="editarIdEmpleado">
+            <input type="hidden" name="id_cargo" id="editarIdCargo"> <div class="mb-3">
+            <label for="editarDni" class="form-label">DNI</label>
+            <input type="text" class="form-control" name="dni" id="editarDni" required pattern="[0-9]{8}" title="El DNI debe contener 8 dígitos numéricos.">
+          </div>
+            <div class="mb-3">
+              <label for="editarNombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" name="nombre" id="editarNombre" required pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo se permiten letras.">
+            </div>
+            <div class="mb-3">
+              <label for="editarApellidos" class="form-label">Apellidos</label>
+              <input type="text" class="form-control" name="apellidos" id="editarApellidos" required pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo se permiten letras.">
+            </div>
+            <div class="mb-3">
+              <label for="editarFechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+              <input type="date" class="form-control" name="fecha_nacimiento" id="editarFechaNacimiento" required>
+            </div>
+            <div class="mb-3">
+              <label for="editarGenero" class="form-label">Género</label>
+              <select class="form-select" name="genero" id="editarGenero" required>
+                <option value="">Seleccione...</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+                <option value="Otro">Otro</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="editarTelefono" class="form-label">Teléfono</label>
+              <input type="tel" class="form-control" name="telefono" id="editarTelefono" pattern="[0-9]{9}" title="El teléfono debe contener 9 dígitos numéricos.">
+            </div>
+            <div class="mb-3">
+              <label for="editarEstadoCivil" class="form-label">Estado Civil</label>
+              <select class="form-select" name="estado_civil" id="editarEstadoCivil">
+                <option value="">Seleccione...</option>
+                <option value="Soltero">Soltero/a</option>       <option value="Casado">Casado/a</option>         <option value="divorciado">Divorciado/a</option> <option value="Viudo">Viudo/a</option>           </select>
+            </div>
+            <div class="mb-3">
+              <label for="editarDireccion" class="form-label">Dirección</label>
+              <input type="text" class="form-control" name="direccion" id="editarDireccion">
+            </div>
+            <div class="mb-3">
+              <label for="editarProfesion" class="form-label">Profesión</label>
+              <select class="form-select" name="id_profesion" id="editarProfesion" required>
+                <option value="">Seleccione...</option>
+                <option th:each="prof : ${profesiones}" th:value="${prof.id_profesion}" th:text="${prof.nombre}"></option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="editarRama" class="form-label">Rama</label>
+              <select class="form-select" name="id_rama" id="editarRama" required>
+                <option value="">Seleccione...</option>
+                <option th:each="ram : ${ramas}" th:value="${ram.id_rama}" th:text="${ram.nombre}"></option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="editarEstado" class="form-label">Estado</label>
+              <select class="form-select" name="estado" id="editarEstado">
+                <option value="">Seleccione...</option>
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+                <option value="Vacaciones">Vacaciones</option>
+                <option value="Licencia">Licencia</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

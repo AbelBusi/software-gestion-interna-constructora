@@ -1,0 +1,164 @@
+<div class="card shadow-sm mt-4" th:fragment="tarjetaRamas">
+    <div class="card-body">
+
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 pb-2 border-bottom">
+            <h2 class="mb-0 fw-semibold text-dark">Lista de Ramas</h2>
+            <button class="btn btn-primary d-flex align-items-center gap-1" data-bs-toggle="modal"
+                    data-bs-target="#modalNuevaRama">
+                <i class="fas fa-plus"></i><span>Nueva Rama</span>
+            </button>
+        </div>
+
+        <div class="mb-3">
+            <form id="filterRamasForm" th:action="@{/administrador/ramas}" method="get">
+                <div class="row g-2 align-items-center">
+                    <div class="col-md-4 col-sm-12">
+                        <label for="searchRama" class="visually-hidden">Buscar</label>
+                        <input type="text" class="form-control" id="searchRama" name="search" th:value="${search}"
+                               placeholder="Buscar por Nombre o Descripción...">
+                    </div>
+
+                    <div class="col-md-3 col-sm-6">
+                        <label for="filterEstadoRama" class="visually-hidden">Filtrar por Estado</label>
+                        <select class="form-select" id="filterEstadoRama" name="estadoFilter">
+                            <option value="">Filtrar por Estado</option>
+                            <option value="true" th:selected="${estadoFilter == 'true'}">Activo</option>
+                            <option value="false" th:selected="${estadoFilter == 'false'}">Inactivo</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6">
+                        <label for="filterProfesionRama" class="visually-hidden">Filtrar por Profesión</label>
+                        <select class="form-select" id="filterProfesionRama" name="profesionFilter">
+                            <option value="">Filtrar por Profesión</option>
+                            <option th:each="prof : ${profesiones}"
+                                    th:value="${prof.id_profesion}"
+                                    th:text="${prof.nombre}"
+                                    th:selected="${prof.id_profesion == profesionFilter}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 col-sm-12">
+                        <button type="submit" class="btn btn-outline-primary w-100">Aplicar Filtros</button>
+                    </div>
+                    <div class="col-12 text-end">
+                        <button type="button" class="btn btn-outline-secondary btn-sm" id="clearRamasFilters">Limpiar Filtros</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle" id="ramasTable">
+                <thead class="table-primary encabezado-azul text-white">
+                <tr>
+                    <th scope="col">
+                        <a th:href="@{/administrador/ramas(page=${ramaPage.number}, size=${ramaPage.size}, search=${search}, estadoFilter=${estadoFilter}, profesionFilter=${profesionFilter}, sortBy='id_rama', sortDir=${(sortBy == 'id_rama' and sortDir == 'asc') ? 'desc' : 'asc'})}"
+                           class="text-white text-decoration-none">
+                            ID <i th:class="${sortBy == 'id_rama' ? (sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down') : 'fas fa-sort'}"></i>
+                        </a>
+                    </th>
+
+                    <th scope="col">
+                        <a th:href="@{/administrador/ramas(page=${ramaPage.number}, size=${ramaPage.size}, search=${search}, estadoFilter=${estadoFilter}, profesionFilter=${profesionFilter}, sortBy='nombre', sortDir=${(sortBy == 'nombre' and sortDir == 'asc') ? 'desc' : 'asc'})}"
+                           class="text-white text-decoration-none">
+                            Nombre <i th:class="${sortBy == 'nombre' ? (sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down') : 'fas fa-sort'}"></i>
+                        </a>
+                    </th>
+
+                    <th>Descripción</th>
+                    <th scope="col">
+                        <a th:href="@{/administrador/ramas(page=${ramaPage.number}, size=${ramaPage.size}, search=${search}, estadoFilter=${estadoFilter}, profesionFilter=${profesionFilter}, sortBy='id_profesion.nombre', sortDir=${(sortBy == 'id_profesion.nombre' and sortDir == 'asc') ? 'desc' : 'asc'})}"
+                           class="text-white text-decoration-none">
+                            Profesión <i th:class="${sortBy == 'id_profesion.nombre' ? (sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down') : 'fas fa-sort'}"></i>
+                        </a>
+                    </th>
+
+                    <th scope="col">
+                        <a th:href="@{/administrador/ramas(page=${ramaPage.number}, size=${ramaPage.size}, search=${search}, estadoFilter=${estadoFilter}, profesionFilter=${profesionFilter}, sortBy='estado', sortDir=${(sortBy == 'estado' and sortDir == 'asc') ? 'desc' : 'asc'})}"
+                           class="text-white text-decoration-none">
+                            Estado <i th:class="${sortBy == 'estado' ? (sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down') : 'fas fa-sort'}"></i>
+                        </a>
+                    </th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="rama : ${ramas}">
+                    <td th:text="${rama.id_rama}"></td>
+                    <td th:text="${rama.nombre}"></td>
+                    <td th:text="${rama.descripcion}"></td>
+                    <td th:text="${rama.id_profesion != null ? rama.id_profesion.nombre : 'Sin profesión'}"></td>
+                    <td>
+                        <span th:classappend="${rama.estado ? 'badge bg-success' : 'badge bg-danger'}"
+                              th:text="${rama.estado ? 'Activo' : 'Inactivo'}"></span>
+                    </td>
+
+                    <td>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-warning btn-accion-empleado btn-editar-rama"
+                                    data-bs-toggle="modal" data-bs-target="#modalEditarRama"
+                                    th:attr="
+                                        data-id_rama=${rama.id_rama},
+                                        data-nombre=${rama.nombre},
+                                        data-descripcion=${rama.descripcion},
+                                        data-id_profesion=${rama.id_profesion?.id_profesion},
+                                        data-estado=${rama.estado}">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button th:if="${rama.estado}" class="btn btn-sm btn-danger btn-accion-empleado btn-desactivar-rama"
+                                    th:attr="data-id_rama=${rama.id_rama}, data-action='desactivar', data-estado=${rama.estado}">
+                                <i class="fas fa-ban"></i> Desactivar
+                            </button>
+                            <button th:if="${!rama.estado}" class="btn btn-sm btn-success btn-accion-empleado btn-activar-rama"
+                                    th:attr="data-id_rama=${rama.id_rama}, data-action='activar', data-estado=${rama.estado}">
+                                <i class="fas fa-check-circle"></i> Activar
+                            </button>
+                            <button class="btn btn-sm btn-danger btn-accion-empleado btn-eliminar-rama"
+                                    th:attr="data-id_rama=${rama.id_rama}">
+                                <i class="fas fa-trash-alt"></i> Eliminar
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(ramas)}">
+                    <td colspan="6" class="text-center text-muted">No hay Ramas registradas.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <nav th:if="${ramaPage.totalPages > 1}" aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${ramaPage.first} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{/administrador/ramas(page=${ramaPage.number - 1}, size=${ramaPage.size}, search=${search}, estadoFilter=${estadoFilter}, profesionFilter=${profesionFilter}, sortBy=${sortBy}, sortDir=${sortDir})}">Anterior</a>
+                </li>
+
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, ramaPage.totalPages - 1)}"
+                    th:classappend="${ramaPage.number == i} ? 'active'">
+                    <a class="page-link"
+                       th:href="@{/administrador/ramas(page=${i}, size=${ramaPage.size}, search=${search}, estadoFilter=${estadoFilter}, profesionFilter=${profesionFilter}, sortBy=${sortBy}, sortDir=${sortDir})}"
+                       th:text="${i + 1}"></a>
+                </li>
+
+                <li class="page-item" th:classappend="${ramaPage.last} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{/administrador/ramas(page=${ramaPage.number + 1}, size=${ramaPage.size}, search=${search}, estadoFilter=${estadoFilter}, profesionFilter=${profesionFilter}, sortBy=${sortBy}, sortDir=${sortDir})}">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <button id="downloadRamasPdfBtn" class="btn btn-danger d-flex align-items-center gap-1">
+                <i class="fas fa-file-pdf"></i><span>Descargar PDF</span>
+            </button>
+            <button id="downloadRamasXlsBtn" class="btn btn-success d-flex align-items-center gap-1">
+                <i class="fas fa-file-excel"></i><span>Descargar XLS</span>
+            </button>
+        </div>
+    </div>
+</div>

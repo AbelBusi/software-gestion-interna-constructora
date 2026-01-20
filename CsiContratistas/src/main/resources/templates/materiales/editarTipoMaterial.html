@@ -1,0 +1,35 @@
+<!-- Modal Editar Tipo de Material -->
+<div th:fragment="modalEditarTipoMaterial">
+  <!-- Modal Nuevo Tipo de Material -->
+  <div class="modal fade" id="modalEditarTipoMaterial" tabindex="-1" aria-labelledby="modalEditarTipoMaterialLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <form th:action="@{/administrador/tipos-material/editar}" method="post">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalEditarTipoMaterialLabel">Editar Tipo de Material</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="idtipomaterial" id="editarIdTipoMaterial">
+            <div class="mb-3">
+              <label for="editarNombreTipo" class="form-label">Nombre</label>
+              <input type="text" class="form-control" name="nombre" id="editarNombreTipo" required>
+            </div>
+            <div class="mb-3">
+              <label for="editarDescripcionTipo" class="form-label">Descripción</label>
+              <input type="text" class="form-control" name="descripcion" id="editarDescripcionTipo" required>
+            </div>
+            <div class="mb-3">
+              <label for="editarClasificacionTipo" class="form-label">Clasificación</label>
+              <input type="text" class="form-control" name="clasificacion" id="editarClasificacionTipo" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="card shadow-sm mt-4" th:fragment="tarjetaRoles">
+    <div class="card-body">
+
+        <!-- Encabezado -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 pb-2 border-bottom">
+            <h2 class="mb-0 fw-semibold text-dark">Lista de Roles</h2>
+            <button class="btn btn-primary d-flex align-items-center gap-1" data-bs-toggle="modal"
+                data-bs-target="#modalNuevoRol">
+                <i class="fas fa-plus"></i><span>Nuevo Rol</span>
+            </button>
+        </div>
+
+        <!-- Tabla -->
+        <div class="table-responsive">
+            <table id="tabla-roles" class="table table-hover align-middle">
+                <thead class="encabezado-azul">
+                    <tr>
+                        <th>ID Rol</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="rol : ${roles}">
+                        <td th:text="${rol.id_rol}"></td>
+                        <td th:text="${rol.nombre}"></td>
+                        <td th:text="${rol.descripcion}"></td>
+                        <!-- Acciones -->
+                        <td>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-warning btn-accion-rol btn-editar-rol" th:attr="data-id_rol=${rol.id_rol},
+                                             data-nombre=${rol.nombre},
+                                             data-descripcion=${rol.descripcion}">
+                                    <i class="fas fa-edit"></i> Editar
+                                </button>
+                                <button class="btn btn-sm btn-danger btn-accion-rol btn-eliminar-rol"
+                                    th:attr="data-id_rol=${rol.id_rol},data-nombre=${rol.nombre}">
+                                    <i class="fas fa-trash-alt"></i> Eliminar
+                                </button>
+                                <button class="btn btn-sm btn-info btn-accion-rol btn-permisos-rol"
+                                    th:attr="data-id_rol=${rol.id_rol},data-nombre=${rol.nombre}" data-bs-toggle="modal"
+                                    data-bs-target="#modalPermisosRol">
+                                    <i class="fas fa-key"></i> Permisos
+                                </button>
+                               
+                            </div>
+                        </td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

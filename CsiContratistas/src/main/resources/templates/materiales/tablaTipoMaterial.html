@@ -1,0 +1,54 @@
+<div class="card shadow-sm mt-4" th:fragment="tarjetaMateriales">
+    <div class="card-body">
+
+        <!-- Encabezado de la tabla -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 pb-2 border-bottom">
+            <h2 class="mb-0 fw-semibold text-dark">Tipos de Materiales</h2>
+            <button class="btn btn-primary d-flex align-items-center gap-1" data-bs-toggle="modal"
+                data-bs-target="#modalNuevoTipoMaterial">
+                <i class="fas fa-plus"></i><span>Nuevo Tipo de Material</span>
+            </button>
+        </div>
+
+        <!-- Tabla -->
+        <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle">
+                <thead class="encabezado-azul">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Clasificación</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="tipo : ${tiposMaterial}">
+                        <td th:text="${tipo.idtipomaterial}"></td>
+                        <td th:text="${tipo.nombre}"></td>
+                        <td th:text="${tipo.descripcion}"></td>
+                        <td th:text="${tipo.clasificacion}"></td>
+                        <td>
+                            <span th:text="${tipo.estado} ? 'Activo' : 'Inactivo'"
+                                  th:classappend="${tipo.estado} ? 'text-success' : 'text-danger'"></span>
+                        </td>
+                        <td>
+                            <div class="d-flex flex-wrap gap-2">
+                                <button class="btn btn-sm btn-warning btn-editar-tipo-material"
+                                    th:attr="data-idtipomaterial=${tipo.idtipomaterial},data-nombre=${tipo.nombre},data-descripcion=${tipo.descripcion},data-clasificacion=${tipo.clasificacion},data-estado=${tipo.estado}">
+                                    <i class="fas fa-edit"></i> Editar
+                                </button>
+                                <button class="btn btn-sm btn-danger btn-eliminar-tipo-material"
+                                    th:attr="data-idtipomaterial=${tipo.idtipomaterial}">
+                                    <i class="fas fa-trash-alt"></i> Eliminar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
