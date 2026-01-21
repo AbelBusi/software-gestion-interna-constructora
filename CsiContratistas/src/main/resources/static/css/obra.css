@@ -1,6 +1,6 @@
     :root{
       --csi-prim:#0d6efd;        /* azul base (Bootstrap “primary”) */
-      --csi-prim-dark:#0547b4;   /* tono más oscuro */
+      --csi-prim-dark:#043b92;   /* tono más oscuro */
       --csi-bg:#f6f9ff;          /* gris-azulado muy claro */
     }
     body{background:var(--csi-bg);}
