@@ -1,0 +1,63 @@
+<div th:fragment="modalEditarMaterial">
+  <div class="modal fade" id="modalEditarMaterial" tabindex="-1" aria-labelledby="modalEditarMaterialLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form th:action="@{/administrador/materiales/editar}" method="post">
+
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalEditarMaterialLabel">Editar Material</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="id_material" id="editarIdMaterial">
+            <div class="mb-3">
+              <label for="editarNombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" name="nombre" id="editarNombre" required>
+            </div>
+            <div class="mb-3">
+              <label for="editarTipoMaterial" class="form-label">Tipo Material</label>
+              <select class="form-select" name="tipo_material.idtipomaterial" id="editarTipoMaterial" required>
+                <option th:each="tipo : ${tiposMaterialObj}" th:value="${tipo.idtipomaterial}" th:text="${tipo.nombre}"></option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="editarPrecioUnitario" class="form-label">Precio Unitario</label>
+              <input type="number" step="0.01" class="form-control" name="precio_unitario" id="editarPrecioUnitario" required>
+            </div>
+            <div class="mb-3">
+              <label for="editarStockActual" class="form-label">Stock Actual</label>
+              <input type="number" class="form-control" name="stock_actual" id="editarStockActual" required>
+            </div>
+            <div class="mb-3">
+              <label for="editarMasaEspecifica" class="form-label">Masa Específica</label>
+              <input type="number" step="0.01" class="form-control" name="masa_especifica" id="editarMasaEspecifica">
+            </div>
+            <div class="mb-3">
+              <label for="editarLongitud" class="form-label">Longitud</label>
+              <input type="number" step="0.01" class="form-control" name="longitud" id="editarLongitud">
+            </div>
+            <div class="mb-3">
+              <label for="editarTemperaturaTermodinamica" class="form-label">Temperatura Termodinámica</label>
+              <input type="number" step="0.01" class="form-control" name="temperatura_termodinamica" id="editarTemperaturaTermodinamica">
+            </div>
+            <div class="mb-3">
+              <label for="editarDescripcion" class="form-label">Descripción</label>
+              <textarea class="form-control" name="descripcion" id="editarDescripcion"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="editarEstado" class="form-label">Estado</label>
+              <select class="form-select" name="estado" id="editarEstado">
+                <option value="true">Activo</option>
+                <option value="false">Inactivo</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,281 @@
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<div class="tab-pane fade" id="pane-terrenos" th:fragment="obrasTerrenos" >
+
+    <!-- ===================  TABLA DE TERRENOS  =================== -->
+    <div class="table-responsive">
+        <table class="table table-hover table-striped table-bordered align-middle" id="tabla-terrenos">
+            <thead class="table-light">
+            <tr>
+                <th>#</th>
+                <th>Acceso Vial</th>
+                <th>Área Total</th>
+                <th>Área Útil</th>
+                <th>Frente (m)</th>
+                <th>Fondo (m)</th>
+                <th>Zonificación</th>
+                <th>Servicios</th>
+                <th>Coordenadas</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="ter, iter : ${terrenos}"
+                th:data-id="${ter.id_terreno}"
+                th:data-id_tipo_suelo="${ter.id_tipo_suelo}"
+                th:data-id_forma_terreno="${ter.id_forma_terreno}"
+                th:data-area_total="${ter.area_total}"
+                th:data-area_util="${ter.area_util}"
+                th:data-frente_metros="${ter.frente_metros}"
+                th:data-fondo_metros="${ter.fondo_metros}"
+                th:data-zonificacion="${ter.zonificacion}"
+                th:data-servicios_basicos="${ter.servicios_basicos}"
+                th:data-acceso_vial="${ter.acceso_vial}"
+                th:data-observaciones="${ter.observaciones}"
+                th:data-coordenadas="${ter.coordenadas}"
+                th:data-fecha_asignacion="${ter.fecha_asignacion}"
+                onclick="seleccionarTerreno(this)">
+
+                <td th:text="${iter.index + 1}">1</td>
+                <td th:text="${ter.acceso_vial ?: '—'}">Av. Principal</td>
+                <td th:text="${ter.area_total ?: 0}">0</td>
+                <td th:text="${ter.area_util ?: 0}">0</td>
+                <td th:text="${ter.frente_metros ?: 0}">0</td>
+                <td th:text="${ter.fondo_metros ?: 0}">0</td>
+                <td th:text="${ter.zonificacion ?: '—'}">N/D</td>
+                <td th:text="${ter.servicios_basicos ? 'Sí' : 'No'}">Sí</td>
+                <td th:text="${ter.coordenadas ?: '—'}">-</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ===================  FORMULARIO DE EDICIÓN  =================== -->
+    <div class="card shadow-sm rounded mt-3">
+        <div class="card-header fw-bold bg-light">Editar Terreno</div>
+        <div class="card-body">
+            <form id="form-terrenos" onsubmit="guardarTerreno(event)">
+                <input type="hidden" id="terId">
+                <input type="hidden" id="terFechaAsignacion">
+
+                <div class="row g-3">
+                    <div class="col-md-6 form-floating">
+                        <select class="form-select" id="terTipoSuelo" required>
+                            <option value="" disabled selected>Seleccione un tipo de suelo</option>
+                            <option th:each="ts : ${tiposSuelo}"
+                                    th:value="${ts.id_tipo_suelo}"
+                                    th:text="${ts.nombre}"
+                                    th:if="${ts.estado}"></option>
+                        </select>
+                        <label>Tipo de suelo</label>
+                    </div>
+
+                    <div class="col-md-6 form-floating">
+                        <select class="form-select" id="terFormaTerreno" required>
+                            <option value="" disabled selected>Seleccione una forma de terreno</option>
+                            <option th:each="ft : ${formasTerreno}"
+                                    th:value="${ft.id_forma_terreno}"
+                                    th:text="${ft.nombre}"
+                                    th:if="${ft.estado}"></option>
+                        </select>
+                        <label>Forma de terreno</label>
+                    </div>
+
+                    <div class="col-md-4 form-floating">
+                        <input type="number" class="form-control" id="terAreaTotal" placeholder="Área total" required>
+                        <label>Área total (m²)</label>
+                    </div>
+
+                    <div class="col-md-4 form-floating">
+                        <input type="number" class="form-control" id="terAreaUtil" placeholder="Área útil" required>
+                        <label>Área útil (m²)</label>
+                    </div>
+
+                    <div class="col-md-4 form-floating">
+                        <input type="number" class="form-control" id="terFrente" placeholder="Frente (m)" required>
+                        <label>Frente (m)</label>
+                    </div>
+
+                    <div class="col-md-4 form-floating">
+                        <input type="number" class="form-control" id="terFondo" placeholder="Fondo (m)" required>
+                        <label>Fondo (m)</label>
+                    </div>
+
+                    <div class="col-md-4 form-floating">
+                        <input type="text" class="form-control" id="terZonificacion" placeholder="Zonificación" required>
+                        <label>Zonificación</label>
+                    </div>
+
+                    <div class="col-md-4 form-floating">
+                        <select class="form-select" id="terServicios" required>
+                            <option value="true">Con servicios básicos</option>
+                            <option value="false">Sin servicios básicos</option>
+                        </select>
+                        <label>Servicios básicos</label>
+                    </div>
+
+                    <div class="col-md-6 form-floating">
+                        <input type="text" class="form-control" id="terAcceso" placeholder="Acceso vial">
+                        <label>Acceso vial</label>
+                    </div>
+
+                    <div class="col-md-6 form-floating">
+                        <input type="text" class="form-control" id="terCoordenadas" placeholder="Coordenadas">
+                        <label>Coordenadas</label>
+                    </div>
+
+                    <div class="col-md-6 form-floating">
+                        <input type="text" class="form-control" id="terObservaciones" placeholder="Observaciones">
+                        <label>Observaciones</label>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <button class="btn btn-success btn-sm"><i class="fa-solid fa-save me-1"></i>Guardar</button>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="eliminarTerreno()"><i class="fa-solid fa-trash me-1"></i>Eliminar</button>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="limpiarFormularioTerreno()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <!-- AÑADE AQUÍ Formas de terreno -->
+    <div id="alerta-forma-terreno"></div>
+
+    <!-- TABLA DE FORMAS DE TERRENO -->
+    <h5 class="mt-4">Formas de Terreno</h5>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered" id="tabla-forma-terreno">
+            <thead class="table-light">
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Estado del material</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tbody>
+            <tr th:each="forma, iter : ${formasTerreno}" th:if="${forma.estado}"
+                th:data-id="${forma.id_forma_terreno}"
+                th:data-nombre="${forma.nombre}"
+                th:data-descripcion="${forma.descripcion}"
+                th:data-estado="${forma.estado}"
+                onclick="seleccionarForma(this)">
+                <td th:text="${iter.index + 1}">1</td>
+                <td th:text="${forma.nombre}">Plano</td>
+                <td th:text="${forma.descripcion}">Terreno plano</td>
+                <td th:text="${forma.estado ? 'Activo' : 'Inactivo'}">Activo</td>
+            </tr>
+            </tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- FORMULARIO PARA EDITAR/CREAR -->
+    <div class="card shadow-sm rounded mt-3">
+        <div class="card-header bg-light fw-bold">Editar Forma de Terreno</div>
+        <div class="card-body">
+            <form id="form-forma-terreno" onsubmit="guardarFormaTerreno(event)">
+                <input type="hidden" name="id" id="formaId">
+
+                <div class="row g-3">
+                    <div class="col-md-6 form-floating">
+                        <input class="form-control" name="nombre" id="formaNombre" placeholder="Nombre"
+                               required>
+                        <label>Nombre</label>
+                    </div>
+                    <div class="col-md-6 form-floating">
+                        <input class="form-control" name="descripcion" id="formaDescripcion"
+                               placeholder="Descripción" required>
+                        <label>Descripción</label>
+                    </div>
+                    <input type="hidden" name="estado" id="formaEstado" value="true">
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-3">
+                    <button type="submit" class="btn btn-success btn-sm"><i class="fa-solid fa-save me-1"></i>Guardar
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="eliminarFormaTerreno()"><i
+                            class="fa-solid fa-trash me-1"></i>Eliminar
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="limpiarFormularioForma()">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- AÑADE AQUÍ Tipos de Suelo -->
+    <h5 class="mt-5">Tipos de Suelo</h5>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+            <thead class="table-light">
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="suelo, iter : ${tiposSuelo}" th:if="${suelo.estado}"
+                th:data-id="${suelo.id_tipo_suelo}"
+                th:data-nombre="${suelo.nombre}"
+                th:data-descripcion="${suelo.descripcion}"
+                th:data-estado="${suelo.estado}"
+                onclick="seleccionarTipoSuelo(this)">
+
+                <td th:text="${iter.index + 1}">1</td>
+                <td th:text="${suelo.nombre}">Nombre</td>
+                <td th:text="${suelo.descripcion}">Descripción</td>
+                <td th:text="${suelo.estado ? 'Activo' : 'Inactivo'}">Activo</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Formulario -->
+    <div class="card shadow-sm rounded mt-3">
+        <div class="card-header bg-light fw-bold">Editar Tipo de Suelo</div>
+        <div class="card-body">
+            <form id="form-tipo-suelo" onsubmit="guardarTipoSuelo(event)">
+                <input type="hidden" name="id"     id="tipoSueloId">
+                <input type="hidden" name="estado" id="tipoSueloEstado" value="true">
+
+                <div class="row g-3">
+                    <div class="col-md-6 form-floating">
+                        <input class="form-control" name="nombre" id="tipoSueloNombre" placeholder="Nombre" required>
+                        <label for="tipoSueloNombre">Nombre</label>
+                    </div>
+                    <div class="col-md-6 form-floating">
+                        <input class="form-control" name="descripcion" id="tipoSueloDescripcion" placeholder="Descripción" required>
+                        <label for="tipoSueloDescripcion">Descripción</label>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-3">
+                    <button type="submit"  class="btn btn-success btn-sm">
+                        <i class="fa-solid fa-save me-1"></i>Guardar
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="eliminarTipoSuelo()">
+                        <i class="fa-solid fa-trash me-1"></i>Eliminar
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="limpiarFormularioTipoSuelo()">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Gestión de Roles</title>
+
+    <!-- Framework y librerías -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/menu.css}">
+    <link rel="stylesheet" th:href="@{/css/usuarios.css}">
+    <link rel="stylesheet" th:href="@{/css/roles.css}">
+</head>
+
+<body>
+
+    <!-- Botón hamburguesa -->
+    <button class="hamburger" onclick="toggleSidebar()">
+        <i class="fa fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <div th:insert="~{dashboard/sidebar.html::sidebar}"></div>
+
+    <!-- === CONTENIDO PRINCIPAL === -->
+    <div class="main-content p-4">
+        <div class="mb-3">
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/administrador/usuarios}">
+                        <i class="fas fa-users me-1"></i> Usuarios
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">
+                        <i class="fas fa-boxes me-1"></i> Roles
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+
+        <div class="row g-3">
+            <!-- Tabla de Roles -->
+            <div class="col-lg-9 col-12">
+                <div th:insert="~{usuarios/roles/tablaRoles.html::tarjetaRoles}"></div>
+            </div>
+
+            <!-- Estadísticas -->
+            <div class="col-lg-3 col-12">
+                <div class="d-flex flex-column gap-3 h-100">
+                    <div class="stats-panel">
+                        <div class="stats-title">Total de Roles</div>
+                        <div class="stats-value" th:text="${roles.size()}">0</div>
+                    </div>
+                    <div class="stats-panel flex-grow-1">
+                        <div class="stats-title">Usuarios por Rol</div>
+                        <ul class="roles-list">
+                            <li th:each="rol : ${roles}">
+                                <span th:text="${rol.nombre}"></span>
+                                <span class="role-count"
+                                    th:text="${usuariosPorRol[rol.id_rol] != null ? usuariosPorRol[rol.id_rol] : 0}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón de descarga PDF -->
+        <div class="botones-exportar mt-3">
+            <button class="btn btn-outline-secondary" id="btnExportPdf">
+                <i class="fas fa-file-pdf me-1"></i> Descargar .pdf
+            </button>
+        </div>
+
+        <!-- ===== MODALES ===== -->
+        <div th:insert="~{usuarios/roles/nuevoRol.html::nuevoRol}"></div>
+        <div th:insert="~{usuarios/roles/editarRol.html::editarRol}"></div>
+        <div th:insert="~{usuarios/roles/modalPermisosRol.html::modalPermisosRol}"></div>
+
+    </div><!-- /main-content -->
+
+    <!-- === SCRIPTS === -->
+    <script th:inline="javascript">
+        const permisosPorRol = JSON.parse(/*[[${permisosPorRolJson}]]*/ '{}');
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script th:src="@{/js/usuarios/roles.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <script th:inline="javascript">
+    let successMsg = /*[[${success}]]*/ '';
+    let errorMsg = /*[[${error}]]*/ '';
+    if (successMsg && successMsg.trim().length > 0) {
+        Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: successMsg,
+            confirmButtonText: 'Aceptar',
+            timer: 2500,
+            timerProgressBar: true
+        });
+    }
+    if (errorMsg && errorMsg.trim().length > 0) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: errorMsg,
+            confirmButtonText: 'Aceptar'
+        });
+    }
+    </script>
+
+</body>
+
+</html>

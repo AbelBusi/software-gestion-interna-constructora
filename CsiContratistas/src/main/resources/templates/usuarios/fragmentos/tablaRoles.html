@@ -1,0 +1,43 @@
+<!-- Fragmento de tabla de roles para carga AJAX -->
+<tbody>
+    <tr th:each="rol : ${roles}">
+        <td th:text="${rol.id_rol}"></td>
+        <td th:text="${rol.nombre}"></td>
+        <td th:text="${rol.descripcion}"></td>
+        <td th:text="${#dates.format(rol.fecha_asignacion, 'dd/MM/yyyy HH:mm')}"></td>
+        <td th:text="${usuariosPorRol[rol.id_rol]}"></td>
+        <td>
+            <span th:if="${rol.estado}" class="badge bg-success">Activo</span>
+            <span th:unless="${rol.estado}" class="badge bg-danger">Inactivo</span>
+        </td>
+        <td>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-sm btn-warning btn-editar-rol"
+                        th:data-id_rol="${rol.id_rol}"
+                        th:data-nombre="${rol.nombre}"
+                        th:data-descripcion="${rol.descripcion}"
+                        title="Editar">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-danger btn-eliminar-rol"
+                        th:data-id_rol="${rol.id_rol}"
+                        th:data-nombre="${rol.nombre}"
+                        title="Eliminar">
+                    <i class="fas fa-trash"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-info btn-permisos-rol"
+                        th:data-id_rol="${rol.id_rol}"
+                        th:data-nombre="${rol.nombre}"
+                        title="Gestionar permisos">
+                    <i class="fas fa-key"></i>
+                </button>
+            </div>
+        </td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(roles)}">
+        <td colspan="7" class="text-center text-muted">
+            <i class="fas fa-info-circle me-2"></i>
+            No hay roles registrados
+        </td>
+    </tr>
+</tbody> 

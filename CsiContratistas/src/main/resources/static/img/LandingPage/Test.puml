@@ -1,0 +1,124 @@
+@startuml
+
+class FormularioRegistroIncidencia {
+  +mostrarFormulario()
+  +registrarIncidencia()
+  +validarDatos()
+}
+
+class GestorIncidencias {
+  +validarEquipo()
+  +validarUsuario() 
+  +crearIncidencia()
+  +asignarEstado()
+}
+
+class Incidencia {
+  -id
+  -codigoEquipo
+  -descripcionProblema
+  -nombreUsuario
+  -fechaHora
+  -personaRegistro
+  -estado
+  +cambiarEstado()
+  +obtenerDetalles()
+}
+
+class Equipo {
+  -codigo
+  -usuario
+  -ubicacion 
+  -fechaCompra
+  +validar()
+  +obtenerIncidencias()
+}
+
+class Usuario {
+  -nombre
+  -area
+  -contacto
+  +validar()
+}
+
+class InterfazAsignacionIncidencias {
+  +mostrarIncidenciasPendientes()
+  +mostrarTecnicosDisponibles()
+  +asignarIncidencia()
+}
+
+class ControladorAsignacion {
+  +obtenerIncidenciasPendientes()
+  +obtenerTecnicosDisponibles()
+  +crearAsignacion()
+  +notificarTecnico()
+}
+
+class Tecnico {
+  -id
+  -nombre
+  -disponibilidad
+  -limiteAtenciones
+  +verificarDisponibilidad()
+  +actualizarDisponibilidad()
+}
+
+class Asignacion {
+  -idIncidencia
+  -idTecnico
+  -fechaAsignacion
+  +registrar()
+}
+
+class FormularioInformeTecnico {
+  +mostrarFormulario()
+  +cargarDatosIncidencia()
+  +registrarInforme()
+}
+
+class ControladorInformes {
+  +obtenerIncidencia()
+  +crearInformeTecnico()
+  +actualizarEstadoIncidencia()
+}
+
+class InformeTecnico {
+  -idIncidencia
+  -descripcionSolucion 
+  -fechaHoraSolucion
+  -tecnicoResponsable
+  +registrar()
+}
+
+FormularioRegistroIncidencia --> GestorIncidencias
+GestorIncidencias --> Incidencia
+GestorIncidencias --> Equipo
+GestorIncidencias --> Usuario
+
+InterfazAsignacionIncidencias --> ControladorAsignacion
+ControladorAsignacion --> Incidencia
+ControladorAsignacion --> Tecnico 
+ControladorAsignacion --> Asignacion
+
+FormularioInformeTecnico --> ControladorInformes
+ControladorInformes --> Incidencia
+ControladorInformes --> InformeTecnico
+
+Incidencia --> Equipo
+
+FormularioRegistroIncidencia << boundary >>
+InterfazAsignacionIncidencias << boundary >>
+FormularioInformeTecnico << boundary >>
+
+GestorIncidencias << control >> 
+ControladorAsignacion << control >>
+ControladorInformes << control >>
+
+Incidencia << entity >>
+Equipo << entity >>
+Usuario << entity >>
+Tecnico << entity >>
+Asignacion << entity >>
+InformeTecnico << entity >>
+
+@enduml
