@@ -1,3 +1,4 @@
+[![Build Status](https://fluorometric-mona-yokelish.ngrok-free.dev/buildStatus/icon?job=Integracion-csi)](https://fluorometric-mona-yokelish.ngrok-free.dev/job/Integracion-csi/)
 # CSIContratistas
 ## 🏗️ Descripción del Sistema
 **CSI Contratistas** es una plataforma web desarrollada para la gestión interna y la presentación pública de las obras ejecutadas por la empresa. Su propósito principal es optimizar los procesos logísticos y administrativos.  

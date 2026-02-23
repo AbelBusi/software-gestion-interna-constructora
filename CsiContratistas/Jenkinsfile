@@ -1,0 +1,65 @@
+pipeline {
+    agent any
+
+    tools {
+        jdk 'JDK21'
+    }
+
+    options {
+        timestamps()
+        disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr: '20'))
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/AbelBusi/software-gestion-interna-constructora.git'
+            }
+        }
+
+        stage('Build & Test') {
+            steps {
+                dir('CsiContratistas') {
+                    bat '.\\mvnw.cmd clean verify'
+                }
+            }
+            post {
+                always {
+                    junit allowEmptyResults: true, 
+                          testResults: 'CsiContratistas\\target\\surefire-reports\\*.xml'  
+
+                    archiveArtifacts allowEmptyArchive: true,
+                                     artifacts: 'CsiContratistas\\target\\surefire-reports\\*, CsiContratistas\\**\\*.log'  
+                }
+            }
+        }
+
+        stage('Package') {
+            steps {
+                dir('CsiContratistas') {
+                    bat '.\\mvnw.cmd package -DskipTests'
+                }
+            }
+        }
+
+        stage('Archive Artifacts') {
+            steps {
+                archiveArtifacts artifacts: 'CsiContratistas/target/*.jar', fingerprint: true
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build exitoso'
+        }
+        failure {
+            echo 'Build falló'
+        }
+         unstable {
+            echo 'Build inestable (tests con fallos)'
+        }
+    }
+}
