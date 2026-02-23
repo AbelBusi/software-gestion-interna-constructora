@@ -15,19 +15,23 @@ pipeline {
 
         stage('Build & Test') {
             steps {
-                bat '.\\mvnw.cmd clean verify'
+                dir('CsiContratistas') {
+                    bat '.\\mvnw.cmd clean verify'
+                }
             }
         }
 
         stage('Package') {
             steps {
-                bat '.\\mvnw.cmd package -DskipTests'
+                dir('CsiContratistas') {
+                    bat '.\\mvnw.cmd package -DskipTests'
+                }
             }
         }
 
         stage('Archive Artifacts') {
             steps {
-                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+                archiveArtifacts artifacts: 'CsiContratistas/target/*.jar', fingerprint: true
             }
         }
     }
