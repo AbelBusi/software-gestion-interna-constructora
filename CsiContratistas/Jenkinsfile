@@ -5,6 +5,12 @@ pipeline {
         jdk 'JDK21'
     }
 
+    options {
+        timestamps()
+        disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr: '20'))
+    }
+
     stages {
 
         stage('Checkout') {
@@ -17,6 +23,15 @@ pipeline {
             steps {
                 dir('CsiContratistas') {
                     bat '.\\mvnw.cmd clean verify'
+                }
+            }
+            post {
+                always {
+                    junit allowEmptyResults: true, 
+                          testResults: 'CsiContratistas\\target\\surefire-reports\\*.xml'  
+
+                    archiveArtifacts allowEmptyArchive: true,
+                                     artifacts: 'CsiContratistas\\target\\surefire-reports\\*, CsiContratistas\\**\\*.log'  
                 }
             }
         }
@@ -42,6 +57,9 @@ pipeline {
         }
         failure {
             echo 'Build falló'
+        }
+         unstable {
+            echo 'Build inestable (tests con fallos)'
         }
     }
 }
