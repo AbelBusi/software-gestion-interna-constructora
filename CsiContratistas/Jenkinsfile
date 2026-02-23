@@ -43,9 +43,7 @@ pipeline {
                         bat """
                         .\\mvnw.cmd -B sonar:sonar ^
                         -Dsonar.projectKey=AbelBusi_software-gestion-interna-constructora ^
-                        -Dsonar.organization=abelbusi ^
-                        -Dsonar.sources=src/main/java ^
-                        -Dsonar.java.binaries=target/classes
+                        -Dsonar.organization=abelbusi ^  
                         """
                     }
                 }
