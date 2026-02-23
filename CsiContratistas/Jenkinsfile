@@ -35,11 +35,17 @@ pipeline {
                 }
             }
         }
+
         stage('Quality Analysis (SonarQube)') {
             steps {
                 dir('CsiContratistas') {
-                    withSonarQubeEnv('SONAR') {
-                        bat """.\\mvnw.cmd -B sonar:sonar ^-Dsonar.projectKey=sonarqube ^-Dsonar.sources=src/main/java ^-Dsonar.java.binaries=target/classes"""
+                    withSonarQubeEnv('sonarqube') {
+                        bat """
+                        .\\mvnw.cmd -B sonar:sonar ^
+                        -Dsonar.projectKey=sonarqube ^
+                        -Dsonar.sources=src/main/java ^
+                        -Dsonar.java.binaries=target/classes
+                        """
                     }
                 }
             }
