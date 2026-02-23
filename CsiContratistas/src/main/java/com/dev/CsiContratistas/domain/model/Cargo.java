@@ -7,7 +7,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
+//clase importante
 @Getter
 @Setter
 @AllArgsConstructor
